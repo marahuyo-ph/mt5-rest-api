@@ -97,72 +97,32 @@ class ThemeColor(IntEnum):
 
 # Terminal Properties
 class TerminalProperty(BaseModel):
-    # Integer Properties - Terminal Status
-    build: int  # The client terminal build number
+    # Boolean Properties
     community_account: bool  # Presence of MQL5.community authorization data
     community_connection: bool  # Connection to MQL5.community
     connected: bool  # Connection to a trade server
     dlls_allowed: bool  # Permission to use DLL
     trade_allowed: bool  # Permission to trade
+    tradeapi_disabled: bool  # Trade API disabled flag
     email_enabled: bool  # Permission to send e-mails
     ftp_enabled: bool  # Permission to send reports using FTP
     notifications_enabled: bool  # Permission to send notifications to smartphone
-    maxbars: int  # The maximal bars count on the chart
     mqid: bool  # Presence of MetaQuotes ID for Push notifications
+    
+    # Integer Properties
+    build: int  # The client terminal build number
+    maxbars: int  # The maximal bars count on the chart
     codepage: int  # Code page number of the language
-    cpu_cores: int  # Number of CPU cores in the system
-    disk_space: int  # Free disk space for MQL5\Files folder (MB)
-    memory_physical: int  # Physical memory in the system (MB)
-    memory_total: int  # Memory available to terminal process (MB)
-    memory_available: int  # Free memory of terminal process (MB)
-    memory_used: int  # Memory used by the terminal (MB)
-    x64: bool  # Indication of 64-bit terminal
-    opencl_support: int  # Version of supported OpenCL (0 = not supported)
-    screen_dpi: int  # Screen resolution (DPI)
-    screen_left: int  # Left coordinate of virtual screen
-    screen_top: int  # Top coordinate of virtual screen
-    screen_width: int  # Virtual screen width
-    screen_height: int  # Virtual screen height
-    terminal_left: int  # Terminal left coordinate relative to virtual screen
-    terminal_top: int  # Terminal top coordinate relative to virtual screen
-    terminal_right: int  # Terminal right coordinate relative to virtual screen
-    terminal_bottom: int  # Terminal bottom coordinate relative to virtual screen
     ping_last: int  # Last known ping to trade server (microseconds)
-    vps: bool  # Terminal launched on MetaTrader Virtual Hosting
     
-    # Integer Properties - Key States
-    keystate_left: int  # State of "Left arrow" key
-    keystate_up: int  # State of "Up arrow" key
-    keystate_right: int  # State of "Right arrow" key
-    keystate_down: int  # State of "Down arrow" key
-    keystate_shift: int  # State of "Shift" key
-    keystate_control: int  # State of "Ctrl" key
-    keystate_menu: int  # State of "Windows" key
-    keystate_capslock: int  # State of "CapsLock" key
-    keystate_numlock: int  # State of "NumLock" key
-    keystate_scrlock: int  # State of "ScrollLock" key
-    keystate_enter: int  # State of "Enter" key
-    keystate_insert: int  # State of "Insert" key
-    keystate_delete: int  # State of "Delete" key
-    keystate_home: int  # State of "Home" key
-    keystate_end: int  # State of "End" key
-    keystate_tab: int  # State of "Tab" key
-    keystate_pageup: int  # State of "PageUp" key
-    keystate_pagedown: int  # State of "PageDown" key
-    keystate_escape: int  # State of "Escape" key
-    
-    # Double Properties
+    # Float Properties
     community_balance: float  # Balance in MQL5.community
     retransmission: float  # Percentage of resent network packets
     
     # String Properties
-    language: str  # Language of the terminal
     company: str  # Company name
     name: str  # Terminal name
+    language: str  # Language of the terminal
     path: str  # Folder from which the terminal is started
     data_path: str  # Folder where terminal data are stored
     commondata_path: str  # Common path for all terminals
-    cpu_name: str  # CPU name
-    cpu_architecture: str  # CPU architecture
-    os_version: str  # User's OS name
-    colortheme_name: str  # Terminal color scheme (Light or Dark)

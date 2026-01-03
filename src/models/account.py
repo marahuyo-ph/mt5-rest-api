@@ -36,7 +36,7 @@ class AccountProperty(BaseModel):
     margin_mode: AccountMarginMode  # Margin calculation mode (ENUM_ACCOUNT_MARGIN_MODE)
     currency_digits: int  # The number of decimal places in the account currency
     fifo_close: bool  # Indication showing that positions can only be closed by FIFO rule
-    hedge_allowed: bool  # Allowed opposite positions on a single symbol
+    hedge_allowed: bool | None = None  # Allowed opposite positions on a single symbol
     
     # Double Properties
     balance: float  # Account balance in the deposit currency

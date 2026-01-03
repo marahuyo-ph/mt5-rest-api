@@ -7,7 +7,7 @@ from ticks import router as tick_router
 from terminal import router as terminal_router
 from history import router as history_router
 from position import router as position_router
-from order import router as order_router
+# from order import router as order_router
 
 if not mt5.initialize():
     print("MT5 not initialized")
@@ -22,4 +22,4 @@ app.include_router(tick_router)
 app.include_router(terminal_router)
 app.include_router(history_router)
 app.include_router(position_router)
-app.include_router(order_router)
+# app.include_router(order_router)

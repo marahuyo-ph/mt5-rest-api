@@ -17,4 +17,4 @@ def terminal_info():
     if not info:
         return mt5.last_error()
 
-    return info._asdict()
+    return TerminalProperty(**info._asdict())
