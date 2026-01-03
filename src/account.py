@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5
-from models import AccountProperty, AccountTradeMode, AccountStopoutMode, AccountMarginMode
+from models import AccountProperty
 
 router = APIRouter(prefix="/accounts")
 
@@ -15,8 +15,6 @@ def get_acc_info():
 
     if not account:
         return mt5.last_error()
-    
-    print(account._asdict())
     
     # Convert the account named tuple to AccountProperty model
     return AccountProperty(

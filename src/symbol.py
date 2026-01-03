@@ -19,7 +19,7 @@ router = APIRouter(prefix="/symbols")
     response_description="Integer value.",
     tags=["symbol"],
 )
-def copy_rates() -> int:
+def symbols_total() -> int:
     return mt5.symbols_total()
 
 
@@ -53,8 +53,6 @@ def symbol_info(symbol: str):
 
     if not current_symbol:
         return mt5.last_error()
-    
-    print(current_symbol)
 
     return SymbolProperty(**current_symbol._asdict())
 
@@ -69,6 +67,9 @@ def symbol_info_tick(symbol: str):
     return Tick(**last_tick._asdict())
 
 
-@router.post("/{symbol}/enable")
+@router.put(
+    "/{symbol}/enable",
+    tags=["symbol"],
+)
 def symbol_select(symbol: str, enable: bool | None = None):
     return mt5.symbol_select(symbol, enable)

@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5
+from models import Position
 
 router = APIRouter(prefix="/positions")
 
@@ -27,4 +28,4 @@ def positions_get(
     if not positions:
         return mt5.last_error()
 
-    return [position._asdict() for position in positions]
+    return [Position(**position._asdict()) for position in positions]
