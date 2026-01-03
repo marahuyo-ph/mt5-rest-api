@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from enum import IntEnum
+import MetaTrader5 as mt5
 
 
 # Symbol Enumerations
@@ -28,19 +29,19 @@ class SymbolTradeExecution(IntEnum):
 
 class SymbolCalcMode(IntEnum):
     """Symbol calculation mode enumeration"""
-    FOREX = 0
-    FOREX_NO_LEVERAGE = 1
-    FUTURES = 2
-    CFD = 3
-    CFDINDEX = 4
-    CFDLEVERAGE = 5
-    EXCH_STOCKS = 6
-    EXCH_FUTURES = 7
-    EXCH_FUTURES_FORTS = 8
-    EXCH_BONDS = 9
-    EXCH_STOCKS_MOEX = 10
-    EXCH_BONDS_MOEX = 11
-    SERV_COLLATERAL = 12
+    FOREX = mt5.SYMBOL_CALC_MODE_FOREX
+    FOREX_NO_LEVERAGE = mt5.SYMBOL_CALC_MODE_FOREX_NO_LEVERAGE
+    FUTURES = mt5.SYMBOL_CALC_MODE_FUTURES
+    CFD = mt5.SYMBOL_CALC_MODE_CFD
+    CFDINDEX = mt5.SYMBOL_CALC_MODE_CFDINDEX
+    CFDLEVERAGE = mt5.SYMBOL_CALC_MODE_CFDLEVERAGE
+    EXCH_STOCKS = mt5.SYMBOL_CALC_MODE_EXCH_STOCKS
+    EXCH_FUTURES = mt5.SYMBOL_CALC_MODE_EXCH_FUTURES
+    EXCH_FUTURES_FORTS = mt5.SYMBOL_CALC_MODE_EXCH_FUTURES
+    EXCH_BONDS = mt5.SYMBOL_CALC_MODE_EXCH_BONDS
+    EXCH_STOCKS_MOEX = mt5.SYMBOL_CALC_MODE_EXCH_STOCKS_MOEX
+    EXCH_BONDS_MOEX = mt5.SYMBOL_CALC_MODE_EXCH_BONDS_MOEX
+    SERV_COLLATERAL = mt5.SYMBOL_CALC_MODE_SERV_COLLATERAL
 
 
 class SymbolSwapMode(IntEnum):
@@ -108,7 +109,7 @@ class SymbolSector(IntEnum):
 # Symbol Properties
 class SymbolProperty(BaseModel):
     # Integer Properties
-    subscription_delay: bool  # Symbol data arrives with a delay
+    subscription_delay: bool = False # Symbol data arrives with a delay
     select: bool  # Symbol is selected in Market Watch
     visible: bool  # Symbol is visible in Market Watch
     session_deals: int  # Number of deals in the current session
@@ -136,11 +137,11 @@ class SymbolProperty(BaseModel):
     option_mode: SymbolOptionMode  # Option type
     option_right: SymbolOptionRight  # Option right (Call/Put)
     chart_mode: SymbolChartMode  # Price type for bar generation
-    exist: bool  # Symbol with this name exists
+    exist: bool | None = None  # Symbol with this name exists
     custom: bool  # It is a custom symbol
-    sector: SymbolSector  # The sector of the economy
+    sector: SymbolSector | None  = None # The sector of the economy
     time: int  # Time of the last quote (datetime)
-    time_msc: int  # Time of the last quote in milliseconds
+    time_msc: int | None = None # Time of the last quote in milliseconds
     
     # Double Properties
     bid: float  # Bid - best sell offer
@@ -171,13 +172,13 @@ class SymbolProperty(BaseModel):
     volume_limit: float  # Maximum allowed aggregate volume
     swap_long: float  # Long swap value
     swap_short: float  # Short swap value
-    swap_sunday: float  # Swap ratio for Sunday rollover
-    swap_monday: float  # Swap ratio for Monday rollover
-    swap_tuesday: float  # Swap ratio for Tuesday rollover
-    swap_wednesday: float  # Swap ratio for Wednesday rollover
-    swap_thursday: float  # Swap ratio for Thursday rollover
-    swap_friday: float  # Swap ratio for Friday rollover
-    swap_saturday: float  # Swap ratio for Saturday rollover
+    swap_sunday: float | None = None  # Swap ratio for Sunday rollover
+    swap_monday: float | None = None  # Swap ratio for Monday rollover
+    swap_tuesday: float | None = None  # Swap ratio for Tuesday rollover
+    swap_wednesday: float | None = None  # Swap ratio for Wednesday rollover
+    swap_thursday: float | None = None  # Swap ratio for Thursday rollover
+    swap_friday: float | None = None  # Swap ratio for Friday rollover
+    swap_saturday: float | None = None  # Swap ratio for Saturday rollover
     margin_initial: float  # Initial margin for one lot
     margin_maintenance: float  # Maintenance margin
     margin_hedged: float  # Margin for hedged positions
@@ -195,12 +196,12 @@ class SymbolProperty(BaseModel):
     price_change: float  # Change relative to previous day in %
     price_volatility: float  # Price volatility in %
     price_theoretical: float  # Theoretical option price
-    price_delta: float  # Option delta
-    price_theta: float  # Option theta
-    price_gamma: float  # Option gamma
-    price_vega: float  # Option vega
-    price_rho: float  # Option rho
-    price_omega: float  # Option omega (elasticity)
+    price_delta: float | None = None # Option delta
+    price_theta: float | None = None # Option theta
+    price_gamma: float | None = None # Option gamma
+    price_vega: float | None = None # Option vega
+    price_rho: float | None = None # Option rho
+    price_omega: float | None = None # Option omega (elasticity)
     price_sensitivity: float  # Option sensitivity
     
     # String Properties
@@ -208,9 +209,9 @@ class SymbolProperty(BaseModel):
     description: str  # Symbol description
     basis: str  # The underlying asset of a derivative
     category: str  # Category or sector name
-    country: str  # The country of the financial symbol
-    sector_name: str  # The sector name
-    industry_name: str  # The industry name
+    country: str | None = None  # The country of the financial symbol
+    sector_name: str | None = None  # The sector name
+    industry_name: str | None = None  # The industry name
     currency_base: str  # Basic currency of a symbol
     currency_profit: str  # Profit currency
     currency_margin: str  # Margin currency
