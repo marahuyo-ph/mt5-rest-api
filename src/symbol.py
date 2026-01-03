@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5
 from datetime import datetime
-from models import SymbolPropertyResponse
 
 router = APIRouter(prefix="/symbols")
 
@@ -18,7 +17,6 @@ def copy_rates() -> int:
 @router.get(
     "/",
     description="Get all financial instruments from the MetaTrader 5 terminal.",
-    response_model=list[SymbolPropertyResponse],
 )
 def symbols_get(group: str | None = None):
     symbols = None

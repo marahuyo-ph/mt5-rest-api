@@ -16,4 +16,4 @@ def get_acc_info():
     if not account:
         return mt5.last_error()
 
-    return account._asdict()
+    return AccountProperty(**account._asdict())
