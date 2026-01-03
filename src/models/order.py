@@ -6,6 +6,7 @@ from typing import Optional
 # Order Reason Enumeration
 class OrderReason(IntEnum):
     """Order reason enumeration"""
+
     CLIENT = 0  # Order placed from desktop terminal
     MOBILE = 1  # Order placed from mobile application
     WEB = 2  # Order placed from web platform
@@ -21,32 +22,46 @@ class Order(BaseModel):
     Order model containing all order properties.
     Retrieved using PositionGet...() functions.
     """
-    
+
     # Integer Properties
     ticket: int  # Order ticket (unique number)
     time_setup: int  # Order setup time (datetime)
     type: int  # Order type
     state: int  # Order state
-    time_expiration: int = Field(default=0, description="Order expiration time (datetime)")
-    time_done: int = Field(default=0, description="Order execution/cancellation time (datetime)")
-    time_setup_msc: int = Field(default=0, description="Order setup time in milliseconds since 01.01.1970")
-    time_done_msc: int = Field(default=0, description="Order execution time in milliseconds since 01.01.1970")
+    time_expiration: int = Field(
+        default=0, description="Order expiration time (datetime)"
+    )
+    time_done: int = Field(
+        default=0, description="Order execution/cancellation time (datetime)"
+    )
+    time_setup_msc: int = Field(
+        default=0, description="Order setup time in milliseconds since 01.01.1970"
+    )
+    time_done_msc: int = Field(
+        default=0, description="Order execution time in milliseconds since 01.01.1970"
+    )
     type_filling: int  # Order filling type
     type_time: int  # Order lifetime type
     magic: int = Field(default=0, description="Expert Advisor ID (magic number)")
-    reason: Optional[OrderReason] = Field(default=None, description="Order placement reason")
+    reason: Optional[OrderReason] = Field(
+        default=None, description="Order placement reason"
+    )
     position_id: int = Field(default=0, description="Position identifier")
     position_by_id: int = Field(default=0, description="Opposite position identifier")
-    
+
     # Double Properties
     volume_initial: float  # Order initial volume
     volume_current: float  # Order current volume
     price_open: float  # Order opening price
     sl: float  # Stop Loss value
     tp: float  # Take Profit value
-    price_current: float = Field(default=0.0, description="Current price of order symbol")
-    price_stoplimit: float = Field(default=0.0, description="Limit order price for StopLimit")
-    
+    price_current: float = Field(
+        default=0.0, description="Current price of order symbol"
+    )
+    price_stoplimit: float = Field(
+        default=0.0, description="Limit order price for StopLimit"
+    )
+
     # String Properties
     symbol: str  # Order symbol
     comment: str = Field(default="", description="Order comment")

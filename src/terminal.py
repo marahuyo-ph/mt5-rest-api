@@ -9,7 +9,7 @@ router = APIRouter(prefix="/terminal")
     "/info",
     description="Get the connected MetaTrader 5 client terminal status and settings.",
     response_model=TerminalProperty,
-    tags=["terminal"]
+    tags=["terminal"],
 )
 def terminal_info():
     info = mt5.terminal_info()

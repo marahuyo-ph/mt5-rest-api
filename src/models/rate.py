@@ -7,7 +7,7 @@ class Rate(BaseModel):
     MqlRates structure for storing information about prices, volumes and spread.
     Contains OHLC (Open, High, Low, Close) data for a specific time period.
     """
-    
+
     time: int  # Period start time (datetime)
     open: float  # Open price
     high: float  # The highest price of the period

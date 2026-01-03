@@ -5,6 +5,7 @@ from enum import IntEnum
 # Account Enumerations
 class AccountTradeMode(IntEnum):
     """Account trade mode enumeration"""
+
     DEMO = 0  # Demo account
     CONTEST = 1  # Contest account
     REAL = 2  # Real account
@@ -12,12 +13,14 @@ class AccountTradeMode(IntEnum):
 
 class AccountStopoutMode(IntEnum):
     """Account stop out mode enumeration"""
+
     PERCENT = 0  # Account stop out mode in percents
     MONEY = 1  # Account stop out mode in money
 
 
 class AccountMarginMode(IntEnum):
     """Account margin mode enumeration"""
+
     RETAIL_NETTING = 0  # OTC markets, netting mode (one position per symbol)
     EXCHANGE = 1  # Exchange markets with discounts
     RETAIL_HEDGING = 2  # Exchange markets with hedging (multiple positions per symbol)
@@ -35,9 +38,11 @@ class AccountProperty(BaseModel):
     trade_expert: bool  # Allowed trade for an Expert Advisor
     margin_mode: AccountMarginMode  # Margin calculation mode (ENUM_ACCOUNT_MARGIN_MODE)
     currency_digits: int  # The number of decimal places in the account currency
-    fifo_close: bool  # Indication showing that positions can only be closed by FIFO rule
+    fifo_close: (
+        bool  # Indication showing that positions can only be closed by FIFO rule
+    )
     hedge_allowed: bool | None = None  # Allowed opposite positions on a single symbol
-    
+
     # Double Properties
     balance: float  # Account balance in the deposit currency
     credit: float  # Account credit in the deposit currency
@@ -53,7 +58,7 @@ class AccountProperty(BaseModel):
     assets: float  # The current assets of an account
     liabilities: float  # The current liabilities on an account
     commission_blocked: float  # The current blocked commission amount on an account
-    
+
     # String Properties
     name: str  # Client name
     server: str  # Trade server name

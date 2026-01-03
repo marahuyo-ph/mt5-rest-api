@@ -4,6 +4,7 @@ from datetime import datetime
 
 router = APIRouter(prefix="/history")
 
+
 @router.get("/orders/total")
 def history_orders_total():
     return mt5.history_orders_total()

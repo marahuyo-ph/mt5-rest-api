@@ -5,6 +5,7 @@ from enum import IntEnum
 # Tick Flag Enumerations
 class TickFlag(IntEnum):
     """Tick flag enumeration"""
+
     BID = 1  # Tick has changed a Bid price
     ASK = 2  # Tick has changed an Ask price
     LAST = 4  # Tick has changed the last deal price
@@ -19,7 +20,7 @@ class Tick(BaseModel):
     MqlTick structure for storing the latest prices of a symbol.
     Designed for fast retrieval of the most requested information about current prices.
     """
-    
+
     time: int  # Time of the last prices update (datetime)
     bid: float  # Current Bid price
     ask: float  # Current Ask price

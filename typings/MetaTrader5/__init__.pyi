@@ -62,23 +62,23 @@ class Deal(NamedTuple):
     pass
 
 class TradeRequest(TypedDict):
-    action:int
-    magic:int
-    order:int
-    symbol:str
-    volume:float
-    price:float
-    stoplimit:float
-    sl:float
-    tp:float
-    deviation:float
-    type:int
-    type_filling:int
-    type_time:int
-    expiration:int
-    comment:str
-    position:int
-    position_by:int
+    action: int
+    magic: int
+    order: int
+    symbol: str
+    volume: float
+    price: float
+    stoplimit: float
+    sl: float
+    tp: float
+    deviation: float
+    type: int
+    type_filling: int
+    type_time: int
+    expiration: int
+    comment: str
+    position: int
+    position_by: int
 
 class TradeCheckResult(TypedDict):
     pass

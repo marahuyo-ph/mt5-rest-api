@@ -6,6 +6,7 @@ from typing import Optional
 # Trade Request Action Enumerations
 class TradeAction(IntEnum):
     """Trade action enumeration"""
+
     DEAL = 1  # Place a deal (market order)
     PENDING = 2  # Place a pending order
     SLTP = 3  # Modify Stop Loss and Take Profit of a position
@@ -16,6 +17,7 @@ class TradeAction(IntEnum):
 
 class OrderType(IntEnum):
     """Order type enumeration"""
+
     BUY = 0  # Market buy order
     SELL = 1  # Market sell order
     BUY_LIMIT = 2  # Buy limit order
@@ -29,6 +31,7 @@ class OrderType(IntEnum):
 
 class OrderFilling(IntEnum):
     """Order filling type enumeration"""
+
     FOK = 1  # Fill or Kill (FOK)
     IOC = 2  # Immediate or Cancel (IOC)
     BOC = 4  # Book or Cancel (BOC)
@@ -37,6 +40,7 @@ class OrderFilling(IntEnum):
 
 class OrderTime(IntEnum):
     """Order time (expiration) type enumeration"""
+
     GTC = 0  # Good Till Canceled
     DAY = 1  # Good Till End of Day
     SPECIFIED = 2  # Good Till Specified Time
@@ -45,6 +49,7 @@ class OrderTime(IntEnum):
 
 class OrderState(IntEnum):
     """Order state enumeration"""
+
     STARTED = 0  # Order just placed
     PLACED = 1  # Order placed on the exchange
     CANCELED = 2  # Order has been canceled
@@ -59,6 +64,7 @@ class OrderState(IntEnum):
 
 class DealType(IntEnum):
     """Deal type enumeration"""
+
     BUY = 0  # Buy deal
     SELL = 1  # Sell deal
     BUY_CANCELED = 2  # Canceled buy deal
@@ -73,6 +79,7 @@ class DealType(IntEnum):
 
 class TradeTransactionType(IntEnum):
     """Trade transaction type enumeration"""
+
     REQUEST = 0  # Trade request has been processed
     REQUEST_ADD = 1  # Trade request added
     REQUEST_UPDATE = 2  # Trade request updated
@@ -96,7 +103,7 @@ class TradeRequest(BaseModel):
     MqlTradeRequest structure for placing/modifying trade orders.
     Used with OrderSend() and OrderCheck() functions.
     """
-    
+
     action: TradeAction  # Trade operation type
     magic: int = Field(default=0, description="Expert Advisor ID (magic number)")
     order: int = Field(default=0, description="Order ticket (for modifications)")
@@ -121,7 +128,7 @@ class TradeCheckResult(BaseModel):
     MqlTradeCheckResult structure for trade request check results.
     Returned by OrderCheck() function before executing the order.
     """
-    
+
     retcode: int  # Return code
     balance: float  # Balance after trade operation
     equity: float  # Equity after trade operation
@@ -137,7 +144,7 @@ class TradeResult(BaseModel):
     MqlTradeResult structure for trade request execution results.
     Returned by OrderSend() and OrderSendAsync() functions.
     """
-    
+
     retcode: int  # Trade server return code
     deal: int = Field(default=0, description="Deal ticket if executed")
     order: int = Field(default=0, description="Order ticket if placed")
@@ -155,7 +162,7 @@ class TradeTransaction(BaseModel):
     MqlTradeTransaction structure describing a trade transaction.
     Received by OnTradeTransaction() event handler.
     """
-    
+
     deal: int = Field(default=0, description="Deal ticket")
     order: int = Field(default=0, description="Order ticket")
     symbol: str = Field(default="", description="Trade symbol")
@@ -164,7 +171,9 @@ class TradeTransaction(BaseModel):
     order_state: Optional[OrderState] = Field(default=None, description="Order state")
     deal_type: Optional[DealType] = Field(default=None, description="Deal type")
     time_type: Optional[OrderTime] = Field(default=None, description="Order time type")
-    time_expiration: int = Field(default=0, description="Order expiration time (datetime)")
+    time_expiration: int = Field(
+        default=0, description="Order expiration time (datetime)"
+    )
     price: float = Field(default=0.0, description="Order/deal/position price")
     price_trigger: float = Field(default=0.0, description="Stop limit activation price")
     price_sl: float = Field(default=0.0, description="Stop Loss level")

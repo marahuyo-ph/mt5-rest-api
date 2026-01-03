@@ -5,12 +5,14 @@ from enum import IntEnum
 # Terminal Enumerations
 class TerminalColorTheme(IntEnum):
     """Terminal color theme enumeration"""
+
     LIGHT = 0
     DARK = 1
 
 
 class ThemeColor(IntEnum):
     """Theme color constants for UI elements"""
+
     WINDOW = 0  # Window background
     WINDOWTEXT = 1  # Text in the window
     BTNTEXT = 2  # Button text
@@ -108,17 +110,17 @@ class TerminalProperty(BaseModel):
     ftp_enabled: bool  # Permission to send reports using FTP
     notifications_enabled: bool  # Permission to send notifications to smartphone
     mqid: bool  # Presence of MetaQuotes ID for Push notifications
-    
+
     # Integer Properties
     build: int  # The client terminal build number
     maxbars: int  # The maximal bars count on the chart
     codepage: int  # Code page number of the language
     ping_last: int  # Last known ping to trade server (microseconds)
-    
+
     # Float Properties
     community_balance: float  # Balance in MQL5.community
     retransmission: float  # Percentage of resent network packets
-    
+
     # String Properties
     company: str  # Company name
     name: str  # Terminal name

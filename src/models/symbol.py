@@ -6,12 +6,14 @@ import MetaTrader5 as mt5
 # Symbol Enumerations
 class SymbolChartMode(IntEnum):
     """Symbol chart mode enumeration"""
+
     BID = 0  # Bars are based on Bid prices
     LAST = 1  # Bars are based on Last prices
 
 
 class SymbolTradeMode(IntEnum):
     """Symbol trade mode enumeration"""
+
     DISABLED = 0  # Trade is disabled for the symbol
     LONGONLY = 1  # Allowed only long positions
     SHORTONLY = 2  # Allowed only short positions
@@ -21,6 +23,7 @@ class SymbolTradeMode(IntEnum):
 
 class SymbolTradeExecution(IntEnum):
     """Symbol trade execution enumeration"""
+
     REQUEST = 0  # Execution by request
     INSTANT = 1  # Instant execution
     MARKET = 2  # Market execution
@@ -29,6 +32,7 @@ class SymbolTradeExecution(IntEnum):
 
 class SymbolCalcMode(IntEnum):
     """Symbol calculation mode enumeration"""
+
     FOREX = mt5.SYMBOL_CALC_MODE_FOREX
     FOREX_NO_LEVERAGE = mt5.SYMBOL_CALC_MODE_FOREX_NO_LEVERAGE
     FUTURES = mt5.SYMBOL_CALC_MODE_FUTURES
@@ -46,6 +50,7 @@ class SymbolCalcMode(IntEnum):
 
 class SymbolSwapMode(IntEnum):
     """Symbol swap mode enumeration"""
+
     DISABLED = 0  # Swaps disabled
     POINTS = 1  # Swaps are charged in points
     CURRENCY_SYMBOL = 2  # Swaps in base currency
@@ -60,6 +65,7 @@ class SymbolSwapMode(IntEnum):
 
 class DayOfWeek(IntEnum):
     """Day of week enumeration"""
+
     SUNDAY = 0
     MONDAY = 1
     TUESDAY = 2
@@ -71,6 +77,7 @@ class DayOfWeek(IntEnum):
 
 class SymbolOrderGtcMode(IntEnum):
     """Symbol order GTC mode enumeration"""
+
     GTC = 0  # Valid until explicit cancellation
     DAILY = 1  # Valid during one trading day
     DAILY_EXCLUDING_STOPS = 2  # Daily, but preserve Stop Loss/Take Profit
@@ -78,18 +85,21 @@ class SymbolOrderGtcMode(IntEnum):
 
 class SymbolOptionMode(IntEnum):
     """Symbol option mode enumeration"""
+
     EUROPEAN = 0  # European option
     AMERICAN = 1  # American option
 
 
 class SymbolOptionRight(IntEnum):
     """Symbol option right enumeration"""
+
     CALL = 0  # Call option - right to buy
     PUT = 1  # Put option - right to sell
 
 
 class SymbolSector(IntEnum):
     """Symbol sector enumeration"""
+
     UNDEFINED = 0
     BASIC_MATERIALS = 1
     COMMUNICATION_SERVICES = 2
@@ -109,7 +119,7 @@ class SymbolSector(IntEnum):
 # Symbol Properties
 class SymbolProperty(BaseModel):
     # Integer Properties
-    subscription_delay: bool = False # Symbol data arrives with a delay
+    subscription_delay: bool = False  # Symbol data arrives with a delay
     select: bool  # Symbol is selected in Market Watch
     visible: bool  # Symbol is visible in Market Watch
     session_deals: int  # Number of deals in the current session
@@ -139,10 +149,10 @@ class SymbolProperty(BaseModel):
     chart_mode: SymbolChartMode  # Price type for bar generation
     exist: bool | None = None  # Symbol with this name exists
     custom: bool  # It is a custom symbol
-    sector: SymbolSector | None  = None # The sector of the economy
+    sector: SymbolSector | None = None  # The sector of the economy
     time: int  # Time of the last quote (datetime)
-    time_msc: int | None = None # Time of the last quote in milliseconds
-    
+    time_msc: int | None = None  # Time of the last quote in milliseconds
+
     # Double Properties
     bid: float  # Bid - best sell offer
     bidhigh: float  # Maximal Bid of the day
@@ -196,14 +206,14 @@ class SymbolProperty(BaseModel):
     price_change: float  # Change relative to previous day in %
     price_volatility: float  # Price volatility in %
     price_theoretical: float  # Theoretical option price
-    price_delta: float | None = None # Option delta
-    price_theta: float | None = None # Option theta
-    price_gamma: float | None = None # Option gamma
-    price_vega: float | None = None # Option vega
-    price_rho: float | None = None # Option rho
-    price_omega: float | None = None # Option omega (elasticity)
+    price_delta: float | None = None  # Option delta
+    price_theta: float | None = None  # Option theta
+    price_gamma: float | None = None  # Option gamma
+    price_vega: float | None = None  # Option vega
+    price_rho: float | None = None  # Option rho
+    price_omega: float | None = None  # Option omega (elasticity)
     price_sensitivity: float  # Option sensitivity
-    
+
     # String Properties
     name: str  # Symbol name
     description: str  # Symbol description

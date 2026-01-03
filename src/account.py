@@ -4,6 +4,7 @@ from models import AccountProperty
 
 router = APIRouter(prefix="/accounts")
 
+
 @router.get(
     "/info",
     description="Get info on the current trading account.",
@@ -15,8 +16,6 @@ def get_acc_info():
 
     if not account:
         return mt5.last_error()
-    
+
     # Convert the account named tuple to AccountProperty model
-    return AccountProperty(
-        **account._asdict()
-    )
+    return AccountProperty(**account._asdict())
