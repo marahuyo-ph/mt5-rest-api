@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 router = APIRouter(prefix="/orders")
 
-
 class CalculateMarginRequest(BaseModel):
     action: int
     symbol: str

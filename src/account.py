@@ -1,21 +1,21 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5
 from models import AccountProperty
+from errors import ErrorResponse
 
-router = APIRouter(prefix="/accounts")
+router = APIRouter(prefix="/accounts",tags=["account"])
 
 
 @router.get(
     "/info",
     description="Get info on the current trading account.",
-    tags=["account"],
     response_model=AccountProperty,
 )
 def get_acc_info():
     account = mt5.account_info()
 
     if not account:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     # Convert the account named tuple to AccountProperty model
     return AccountProperty(**account._asdict())
