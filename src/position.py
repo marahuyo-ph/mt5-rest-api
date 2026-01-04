@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5  # type: ignore
-from models import Position
-from errors import ErrorResponse
+from .models import Position
+from .errors import ErrorResponse
 
 router = APIRouter(prefix="/positions", tags=["positions"])
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5  # type: ignore
-from models import TradeRequest, Order
+from .models import TradeRequest, Order
 from pydantic import BaseModel
-from errors import ErrorResponse
+from .errors import ErrorResponse
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 

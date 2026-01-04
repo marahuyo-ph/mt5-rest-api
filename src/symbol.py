@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5  # type: ignore
 from pydantic import BaseModel
-from models import SymbolProperty, Tick
-from errors import ErrorResponse
+from .models import SymbolProperty, Tick
+from .errors import ErrorResponse
 
 
 class SymbolPropertyResponse(BaseModel):

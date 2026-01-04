@@ -1,29 +1,30 @@
 from pydantic import BaseModel
 from enum import IntEnum
+import MetaTrader5 as mt5 #type: ignore
 
 
 # Account Enumerations
 class AccountTradeMode(IntEnum):
     """Account trade mode enumeration"""
 
-    DEMO = 0  # Demo account
-    CONTEST = 1  # Contest account
-    REAL = 2  # Real account
+    DEMO = mt5.ACCOUNT_TRADE_MODE_DEMO  # Demo account
+    CONTEST = mt5.ACCOUNT_TRADE_MODE_CONTEST  # Contest account
+    REAL = mt5.ACCOUNT_TRADE_MODE_REAL  # Real account
 
 
 class AccountStopoutMode(IntEnum):
     """Account stop out mode enumeration"""
 
-    PERCENT = 0  # Account stop out mode in percents
-    MONEY = 1  # Account stop out mode in money
+    PERCENT = mt5.ACCOUNT_STOPOUT_MODE_PERCENT  # Account stop out mode in percents
+    MONEY = mt5.ACCOUNT_STOPOUT_MODE_MONEY  # Account stop out mode in money
 
 
 class AccountMarginMode(IntEnum):
     """Account margin mode enumeration"""
 
-    RETAIL_NETTING = 0  # OTC markets, netting mode (one position per symbol)
-    EXCHANGE = 1  # Exchange markets with discounts
-    RETAIL_HEDGING = 2  # Exchange markets with hedging (multiple positions per symbol)
+    RETAIL_NETTING = mt5.ACCOUNT_MARGIN_MODE_RETAIL_NETTING  # OTC markets, netting mode (one position per symbol)
+    EXCHANGE = mt5.ACCOUNT_MARGIN_MODE_EXCHANGE  # Exchange markets with discounts
+    RETAIL_HEDGING = mt5.ACCOUNT_MARGIN_MODE_RETAIL_HEDGING  # Exchange markets with hedging (multiple positions per symbol)
 
 
 # Account Properties
@@ -41,7 +42,7 @@ class AccountProperty(BaseModel):
     fifo_close: (
         bool  # Indication showing that positions can only be closed by FIFO rule
     )
-    hedge_allowed: bool | None = None  # Allowed opposite positions on a single symbol
+    # hedge_allowed: bool = False  # Allowed opposite positions on a single symbol
 
     # Double Properties
     balance: float  # Account balance in the deposit currency

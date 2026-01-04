@@ -6,9 +6,16 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi[standard]>=0.128.0",
+    "httpx>=0.28.1",
     "metatrader5>=5.0.5430",
     "numpy>=2.4.0",
     "pandas>=2.3.3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.23.0",
 ]
 
 [tool.pyright]
@@ -17,3 +24,8 @@ typeCheckingMode = "standard"
 
 [tool.pylance]
 typeCheckingMode = "standard"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+asyncio_mode = "auto"
