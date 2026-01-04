@@ -2,8 +2,9 @@ from fastapi import APIRouter
 import MetaTrader5 as mt5
 from models import TradeRequest, Order, TradeResult, TradeCheckResult
 from pydantic import BaseModel
+from errors import ErrorResponse
 
-router = APIRouter(prefix="/orders")
+router = APIRouter(prefix="/orders",tags=["orders"])
 
 class CalculateMarginRequest(BaseModel):
     action: int
@@ -33,7 +34,7 @@ def orders_get(
         orders = mt5.orders_get()
 
     if orders is None:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return [Order(**order._asdict()) for order in orders]
 
@@ -45,7 +46,7 @@ def orders_calc_margin(payload: CalculateMarginRequest):
     )
 
     if not margin:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return margin
 
@@ -61,7 +62,7 @@ def orders_calc_profit(payload):
     )
 
     if not profit:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return profit
 
@@ -93,7 +94,7 @@ def orders_check(payload: TradeRequest):
     )
 
     if not check_result:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return check_result
 
@@ -125,6 +126,6 @@ def orders_send(payload: TradeRequest):
     )
 
     if not result:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return result

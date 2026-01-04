@@ -1,8 +1,9 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5
 from models import Position
+from errors import ErrorResponse
 
-router = APIRouter(prefix="/positions")
+router = APIRouter(prefix="/positions",tags=["positions"])
 
 
 @router.get("/total")
@@ -26,6 +27,6 @@ def positions_get(
         positions = mt5.positions_get()
 
     if not positions:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return [Position(**position._asdict()) for position in positions]

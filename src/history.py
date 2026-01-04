@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 import MetaTrader5 as mt5
 from datetime import datetime
+from errors import ErrorResponse
 
 router = APIRouter(prefix="/history")
 
@@ -32,7 +33,7 @@ def history_orders_get(
         return {"Invalid query": "Invalid query parameters"}
 
     if not orders:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return [order._asdict() for order in orders]
 
@@ -62,6 +63,6 @@ def history_deals_get(
         return {"Invalid query": "Invalid query parameters"}
 
     if not deals:
-        return mt5.last_error()
+        return ErrorResponse.model_validate(mt5.last_error())
 
     return [deal._asdict() for deal in deals]
