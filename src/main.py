@@ -1,4 +1,4 @@
-import MetaTrader5 as mt5
+import MetaTrader5 as mt5  # type: ignore
 from fastapi import FastAPI
 from account import router as account_router
 from symbol import router as symbol_router

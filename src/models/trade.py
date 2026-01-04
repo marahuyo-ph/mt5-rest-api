@@ -105,22 +105,22 @@ class TradeRequest(BaseModel):
     """
 
     action: TradeAction  # Trade operation type
-    magic: int = Field(default=0, description="Expert Advisor ID (magic number)")
-    order: int = Field(default=0, description="Order ticket (for modifications)")
+    magic: int = Field(default=0, summary="Expert Advisor ID (magic number)")
+    order: int = Field(default=0, summary="Order ticket (for modifications)")
     symbol: str  # Trade symbol
     volume: float  # Requested volume in lots
-    price: float = Field(default=0.0, description="Order price")
-    stoplimit: float = Field(default=0.0, description="StopLimit price")
-    sl: float = Field(default=0.0, description="Stop Loss level")
-    tp: float = Field(default=0.0, description="Take Profit level")
-    deviation: float = Field(default=0.0, description="Max price deviation in points")
+    price: float = Field(default=0.0, summary="Order price")
+    stoplimit: float = Field(default=0.0, summary="StopLimit price")
+    sl: float = Field(default=0.0, summary="Stop Loss level")
+    tp: float = Field(default=0.0, summary="Take Profit level")
+    deviation: float = Field(default=0.0, summary="Max price deviation in points")
     type: OrderType  # Order type
     type_filling: OrderFilling  # Order filling type
     type_time: OrderTime  # Order expiration type
-    expiration: int = Field(default=0, description="Order expiration time (datetime)")
-    comment: str = Field(default="", description="Order comment")
-    position: int = Field(default=0, description="Position ticket")
-    position_by: int = Field(default=0, description="Opposite position ticket")
+    expiration: int = Field(default=0, summary="Order expiration time (datetime)")
+    comment: str = Field(default="", summary="Order comment")
+    position: int = Field(default=0, summary="Position ticket")
+    position_by: int = Field(default=0, summary="Opposite position ticket")
 
 
 class TradeCheckResult(BaseModel):
@@ -136,7 +136,7 @@ class TradeCheckResult(BaseModel):
     margin: float  # Required margin
     margin_free: float  # Free margin after trade operation
     margin_level: float  # Margin level percentage
-    comment: str = Field(default="", description="Return code description")
+    comment: str = Field(default="", summary="Return code description")
 
 
 class TradeResult(BaseModel):
@@ -146,15 +146,15 @@ class TradeResult(BaseModel):
     """
 
     retcode: int  # Trade server return code
-    deal: int = Field(default=0, description="Deal ticket if executed")
-    order: int = Field(default=0, description="Order ticket if placed")
-    volume: float = Field(default=0.0, description="Deal volume confirmed by broker")
-    price: float = Field(default=0.0, description="Deal price confirmed by broker")
-    bid: float = Field(default=0.0, description="Current Bid price")
-    ask: float = Field(default=0.0, description="Current Ask price")
-    comment: str = Field(default="", description="Broker comment")
-    request_id: int = Field(default=0, description="Request ID")
-    retcode_external: int = Field(default=0, description="External system error code")
+    deal: int = Field(default=0, summary="Deal ticket if executed")
+    order: int = Field(default=0, summary="Order ticket if placed")
+    volume: float = Field(default=0.0, summary="Deal volume confirmed by broker")
+    price: float = Field(default=0.0, summary="Deal price confirmed by broker")
+    bid: float = Field(default=0.0, summary="Current Bid price")
+    ask: float = Field(default=0.0, summary="Current Ask price")
+    comment: str = Field(default="", summary="Broker comment")
+    request_id: int = Field(default=0, summary="Request ID")
+    retcode_external: int = Field(default=0, summary="External system error code")
 
 
 class TradeTransaction(BaseModel):
@@ -163,21 +163,19 @@ class TradeTransaction(BaseModel):
     Received by OnTradeTransaction() event handler.
     """
 
-    deal: int = Field(default=0, description="Deal ticket")
-    order: int = Field(default=0, description="Order ticket")
-    symbol: str = Field(default="", description="Trade symbol")
+    deal: int = Field(default=0, summary="Deal ticket")
+    order: int = Field(default=0, summary="Order ticket")
+    symbol: str = Field(default="", summary="Trade symbol")
     type: TradeTransactionType  # Trade transaction type
-    order_type: Optional[OrderType] = Field(default=None, description="Order type")
-    order_state: Optional[OrderState] = Field(default=None, description="Order state")
-    deal_type: Optional[DealType] = Field(default=None, description="Deal type")
-    time_type: Optional[OrderTime] = Field(default=None, description="Order time type")
-    time_expiration: int = Field(
-        default=0, description="Order expiration time (datetime)"
-    )
-    price: float = Field(default=0.0, description="Order/deal/position price")
-    price_trigger: float = Field(default=0.0, description="Stop limit activation price")
-    price_sl: float = Field(default=0.0, description="Stop Loss level")
-    price_tp: float = Field(default=0.0, description="Take Profit level")
-    volume: float = Field(default=0.0, description="Volume in lots")
-    position: int = Field(default=0, description="Position ticket")
-    position_by: int = Field(default=0, description="Opposite position ticket")
+    order_type: Optional[OrderType] = Field(default=None, summary="Order type")
+    order_state: Optional[OrderState] = Field(default=None, summary="Order state")
+    deal_type: Optional[DealType] = Field(default=None, summary="Deal type")
+    time_type: Optional[OrderTime] = Field(default=None, summary="Order time type")
+    time_expiration: int = Field(default=0, summary="Order expiration time (datetime)")
+    price: float = Field(default=0.0, summary="Order/deal/position price")
+    price_trigger: float = Field(default=0.0, summary="Stop limit activation price")
+    price_sl: float = Field(default=0.0, summary="Stop Loss level")
+    price_tp: float = Field(default=0.0, summary="Take Profit level")
+    volume: float = Field(default=0.0, summary="Volume in lots")
+    position: int = Field(default=0, summary="Position ticket")
+    position_by: int = Field(default=0, summary="Opposite position ticket")

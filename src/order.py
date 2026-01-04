@@ -1,10 +1,11 @@
 from fastapi import APIRouter
-import MetaTrader5 as mt5
-from models import TradeRequest, Order, TradeResult, TradeCheckResult
+import MetaTrader5 as mt5  # type: ignore
+from models import TradeRequest, Order
 from pydantic import BaseModel
 from errors import ErrorResponse
 
-router = APIRouter(prefix="/orders",tags=["orders"])
+router = APIRouter(prefix="/orders", tags=["orders"])
+
 
 class CalculateMarginRequest(BaseModel):
     action: int
@@ -13,12 +14,22 @@ class CalculateMarginRequest(BaseModel):
     price: float
 
 
-@router.get("/total")
+class CalculateProfitRequest(BaseModel):
+    action: int
+    symbol: str
+    volume: float
+    price_open: float
+    price_close: float
+
+
+@router.get("/total", summary="Get the number of active orders.")
 def orders_total():
     return mt5.orders_total()
 
 
-@router.get("/")
+@router.get(
+    "/", summary="Get active orders with the ability to filter by symbol or ticket."
+)
 def orders_get(
     symbol: str | None = None, group: str | None = None, ticket: int | None = None
 ):
@@ -39,7 +50,10 @@ def orders_get(
     return [Order(**order._asdict()) for order in orders]
 
 
-@router.post("/calculate-margin")
+@router.post(
+    "/calculate-margin",
+    summary="Return margin in the account currency to perform a specified trading operation.",
+)
 def orders_calc_margin(payload: CalculateMarginRequest):
     margin = mt5.order_calc_margin(
         payload.action, payload.symbol, payload.volume, payload.price
@@ -51,8 +65,11 @@ def orders_calc_margin(payload: CalculateMarginRequest):
     return margin
 
 
-@router.post("/calculate-profit")
-def orders_calc_profit(payload):
+@router.post(
+    "/calculate-profit",
+    summary="Return profit in the account currency for a specified trading operation.",
+)
+def orders_calc_profit(payload: CalculateProfitRequest):
     profit = mt5.order_calc_profit(
         payload.action,
         payload.symbol,
@@ -67,7 +84,10 @@ def orders_calc_profit(payload):
     return profit
 
 
-@router.post("/check")
+@router.post(
+    "/check",
+    summary="Check funds sufficiency for performing a required trading operation. Check result are returned as the TradeCheckResult structure.",
+)
 def orders_check(payload: TradeRequest):
     check_result = mt5.order_check(
         mt5.TradeRequest(
@@ -99,7 +119,10 @@ def orders_check(payload: TradeRequest):
     return check_result
 
 
-@router.post("/send")
+@router.post(
+    "/send",
+    summary="Send a request to perform a trading operation from the terminal to the trade server. The function is similar to OrderSend.",
+)
 def orders_send(payload: TradeRequest):
     result = mt5.order_send(
         mt5.TradeRequest(

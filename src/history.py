@@ -1,17 +1,23 @@
 from fastapi import APIRouter
-import MetaTrader5 as mt5
+import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 from errors import ErrorResponse
 
-router = APIRouter(prefix="/history")
+router = APIRouter(prefix="/history", tags=["history"])
 
 
-@router.get("/orders/total")
+@router.get(
+    "/orders/total",
+    summary="Get the number of orders in trading history within the specified interval.",
+)
 def history_orders_total():
     return mt5.history_orders_total()
 
 
-@router.get("/orders/")
+@router.get(
+    "/orders/",
+    summary="Get orders from trading history with the ability to filter by ticket or position.",
+)
 def history_orders_get(
     date_from: datetime | None = None,
     date_to: datetime | None = None,
@@ -38,12 +44,18 @@ def history_orders_get(
     return [order._asdict() for order in orders]
 
 
-@router.get("/deals/total")
+@router.get(
+    "/deals/total",
+    summary="Get the number of deals in trading history within the specified interval.",
+)
 def history_deals_total():
     return mt5.history_deals_total()
 
 
-@router.get("/deals/")
+@router.get(
+    "/deals/",
+    summary="Get deals from trading history within the specified interval with the ability to filter by ticket or position.",
+)
 def history_deals_get(
     date_from: datetime | None = None,
     date_to: datetime | None = None,

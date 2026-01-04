@@ -1,17 +1,19 @@
 from fastapi import APIRouter
-import MetaTrader5 as mt5
+import MetaTrader5 as mt5  # type: ignore
 from models import Position
 from errors import ErrorResponse
 
-router = APIRouter(prefix="/positions",tags=["positions"])
+router = APIRouter(prefix="/positions", tags=["positions"])
 
 
-@router.get("/total")
+@router.get("/total", summary="Get the number of open positions.")
 def positions_total():
     return mt5.positions_total()
 
 
-@router.get("/")
+@router.get(
+    "/", summary="Get open positions with the ability to filter by symbol or ticket."
+)
 def positions_get(
     symbol: str | None = None, group: str | None = None, ticket: int | None = None
 ):

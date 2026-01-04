@@ -1,13 +1,16 @@
 from fastapi import APIRouter
-import MetaTrader5 as mt5
+import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
-import pandas as pd
+import pandas as pd  # type: ignore
 from errors import ErrorResponse
 
-router = APIRouter(prefix="/rates")
+router = APIRouter(prefix="/rates", tags=["rates"])
 
 
-@router.get("/from/{symbol}/{timeframe}/{date_from}/{count}")
+@router.get(
+    "/from/{symbol}/{timeframe}/{date_from}/{count}",
+    summary="Get bars from the MetaTrader 5 terminal starting from the specified date.",
+)
 def copy_rates_from(symbol: str, timeframe: int, date_from: datetime, count: int):
     rates = mt5.copy_rates_from(symbol, timeframe, date_from, count)
 
@@ -19,7 +22,10 @@ def copy_rates_from(symbol: str, timeframe: int, date_from: datetime, count: int
     return df.to_dict(orient="records")
 
 
-@router.get("/from-pos/{symbol}/{timeframe}/{start_pos}/{count}")
+@router.get(
+    "/from-pos/{symbol}/{timeframe}/{start_pos}/{count}",
+    summary="Get bars from the MetaTrader 5 terminal starting from the specified index.",
+)
 def copy_rates_from_pos(symbol: str, timeframe: int, start_pos: int, count: int):
     rates = mt5.copy_rates_from_pos(symbol, timeframe, start_pos, count)
 
@@ -31,7 +37,10 @@ def copy_rates_from_pos(symbol: str, timeframe: int, start_pos: int, count: int)
     return df.to_dict(orient="records")
 
 
-@router.get("/range/{symbol}/{timeframe}/{date_from}/{date_to}")
+@router.get(
+    "/range/{symbol}/{timeframe}/{date_from}/{date_to}",
+    summary="Get bars in the specified date range from the MetaTrader 5 terminal.",
+)
 def copy_rates_range(
     symbol: str, timeframe: int, date_from: datetime, date_to: datetime
 ):

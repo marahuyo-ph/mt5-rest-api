@@ -1,6 +1,7 @@
 from enum import Enum
 from pydantic import BaseModel, model_validator, ConfigDict
 
+
 class ErrorCodes(Enum):
     RES_S_OK = 1
     RES_E_FAIL = -1
@@ -23,9 +24,9 @@ class ErrorResponse(BaseModel):
     model_config = ConfigDict(use_enum_values=False)
     code: ErrorCodes
     message: str
-    
-    @model_validator(mode='before')
+
+    @model_validator(mode="before")
     def convert_tuple(cls, data):
         if isinstance(data, tuple):
-            return {'code': data[0], 'message': data[1]}
+            return {"code": data[0], "message": data[1]}
         return data

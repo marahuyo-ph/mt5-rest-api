@@ -1,14 +1,14 @@
 from fastapi import APIRouter
-import MetaTrader5 as mt5
+import MetaTrader5 as mt5  # type: ignore
 from models import AccountProperty
 from errors import ErrorResponse
 
-router = APIRouter(prefix="/accounts",tags=["account"])
+router = APIRouter(prefix="/accounts", tags=["account"])
 
 
 @router.get(
     "/info",
-    description="Get info on the current trading account.",
+    summary="Get info on the current trading account.",
     response_model=AccountProperty,
 )
 def get_acc_info():
