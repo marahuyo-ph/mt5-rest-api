@@ -10,6 +10,7 @@ router = APIRouter(prefix="/ticks", tags=["ticks"])
 @router.get(
     "/from/{symbol}/{date_from}/{count}",
     summary="Get ticks from the MetaTrader 5 terminal starting from the specified date.",
+    status_code=200,
 )
 def copy_ticks_from(symbol: str, date_from: datetime, count: int, flags: int):
     ticks = mt5.copy_ticks_from(symbol, date_from, count, flags)
@@ -25,6 +26,7 @@ def copy_ticks_from(symbol: str, date_from: datetime, count: int, flags: int):
 @router.get(
     "/range/{symbol}/{date_from}/{date_to}",
     summary="Get ticks for the specified date range from the MetaTrader 5 terminal.",
+    status_code=200,
 )
 def copy_ticks_range(symbol: str, date_from: datetime, date_to: datetime, flags: int):
     ticks = mt5.copy_ticks_range(symbol, date_from, date_to, flags)

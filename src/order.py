@@ -22,13 +22,19 @@ class CalculateProfitRequest(BaseModel):
     price_close: float
 
 
-@router.get("/total", summary="Get the number of active orders.")
+@router.get(
+    "/total",
+    summary="Get the number of active orders.",
+    status_code=200,
+)
 def orders_total():
     return mt5.orders_total()
 
 
 @router.get(
-    "/", summary="Get active orders with the ability to filter by symbol or ticket."
+    "/",
+    summary="Get active orders with the ability to filter by symbol or ticket.",
+    status_code=200,
 )
 def orders_get(
     symbol: str | None = None, group: str | None = None, ticket: int | None = None
@@ -53,6 +59,7 @@ def orders_get(
 @router.post(
     "/calculate-margin",
     summary="Return margin in the account currency to perform a specified trading operation.",
+    status_code=200,
 )
 def orders_calc_margin(payload: CalculateMarginRequest):
     margin = mt5.order_calc_margin(
@@ -68,6 +75,7 @@ def orders_calc_margin(payload: CalculateMarginRequest):
 @router.post(
     "/calculate-profit",
     summary="Return profit in the account currency for a specified trading operation.",
+    status_code=200,
 )
 def orders_calc_profit(payload: CalculateProfitRequest):
     profit = mt5.order_calc_profit(
@@ -87,6 +95,7 @@ def orders_calc_profit(payload: CalculateProfitRequest):
 @router.post(
     "/check",
     summary="Check funds sufficiency for performing a required trading operation. Check result are returned as the TradeCheckResult structure.",
+    status_code=200,
 )
 def orders_check(payload: TradeRequest):
     check_result = mt5.order_check(
@@ -122,6 +131,7 @@ def orders_check(payload: TradeRequest):
 @router.post(
     "/send",
     summary="Send a request to perform a trading operation from the terminal to the trade server. The function is similar to OrderSend.",
+    status_code=201,
 )
 def orders_send(payload: TradeRequest):
     result = mt5.order_send(

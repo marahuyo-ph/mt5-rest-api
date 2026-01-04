@@ -10,6 +10,7 @@ router = APIRouter(prefix="/accounts", tags=["account"])
     "/info",
     summary="Get info on the current trading account.",
     response_model=AccountProperty,
+    status_code=200,
 )
 def get_acc_info():
     account = mt5.account_info()

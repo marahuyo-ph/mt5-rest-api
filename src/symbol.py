@@ -54,7 +54,10 @@ def symbol_info(symbol: str):
     return SymbolProperty(**current_symbol._asdict())
 
 
-@router.get("/{symbol}/last-tick", summary="Get the last tick for the specified financial instrument.")
+@router.get(
+    "/{symbol}/last-tick",
+    summary="Get the last tick for the specified financial instrument.",
+)
 def symbol_info_tick(symbol: str):
     last_tick = mt5.symbol_info_tick(symbol)
 
@@ -64,6 +67,9 @@ def symbol_info_tick(symbol: str):
     return Tick(**last_tick._asdict())
 
 
-@router.put("/{symbol}/enable", summary="Select a symbol in the MarketWatch window or remove a symbol from the window.")
+@router.put(
+    "/{symbol}/enable",
+    summary="Select a symbol in the MarketWatch window or remove a symbol from the window.",
+)
 def symbol_select(symbol: str, enable: bool | None = None):
     return mt5.symbol_select(symbol, enable)
