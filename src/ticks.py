@@ -6,7 +6,6 @@ from errors import ErrorResponse
 
 router = APIRouter(prefix="/ticks", tags=["ticks"])
 
-
 @router.get(
     "/from/{symbol}/{date_from}/{count}",
     summary="Get ticks from the MetaTrader 5 terminal starting from the specified date.",
