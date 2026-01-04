@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from enum import IntEnum
-import MetaTrader5 as mt5
+import MetaTrader5 as mt5 #type: ignore
 
 
 # Symbol Enumerations
@@ -66,13 +66,14 @@ class SymbolSwapMode(IntEnum):
 class DayOfWeek(IntEnum):
     """Day of week enumeration"""
 
-    SUNDAY = 0
-    MONDAY = 1
-    TUESDAY = 2
-    WEDNESDAY = 3
-    THURSDAY = 4
-    FRIDAY = 5
-    SATURDAY = 6
+    SUNDAY = mt5.DAY_OF_WEEK_SUNDAY
+    MONDAY = mt5.DAY_OF_WEEK_MONDAY
+    TUESDAY = mt5.DAY_OF_WEEK_TUESDAY
+    WEDNESDAY = mt5.DAY_OF_WEEK_WEDNESDAY
+    THURSDAY = mt5.DAY_OF_WEEK_THURSDAY
+    FRIDAY = mt5.DAY_OF_WEEK_FRIDAY
+    SATURDAY = mt5.DAY_OF_WEEK_SATURDAY
+    UNDEFINED = 7
 
 
 class SymbolOrderGtcMode(IntEnum):

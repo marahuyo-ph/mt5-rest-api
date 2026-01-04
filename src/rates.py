@@ -15,7 +15,7 @@ router = APIRouter(prefix="/rates", tags=["rates"])
 def copy_rates_from(symbol: str, timeframe: int, date_from: datetime, count: int):
     rates = mt5.copy_rates_from(symbol, timeframe, date_from, count)
 
-    if not rates:
+    if rates is None:
         return ErrorResponse.model_validate(mt5.last_error())
 
     df = pd.DataFrame(rates)
