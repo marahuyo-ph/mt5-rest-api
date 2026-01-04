@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from .models import TerminalProperty
 from .errors import ErrorResponse
@@ -16,6 +17,8 @@ def terminal_info():
     info = mt5.terminal_info()
 
     if not info:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return TerminalProperty(**info._asdict())

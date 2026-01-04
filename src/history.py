@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 from .errors import ErrorResponse
@@ -41,7 +42,9 @@ def history_orders_get(
         return {"Invalid query": "Invalid query parameters"}
 
     if not orders:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return [order._asdict() for order in orders]
 
@@ -79,6 +82,8 @@ def history_deals_get(
         return {"Invalid query": "Invalid query parameters"}
 
     if not deals:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return [deal._asdict() for deal in deals]

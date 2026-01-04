@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from .models import TradeRequest, Order
 from pydantic import BaseModel
@@ -51,7 +52,9 @@ def orders_get(
         orders = mt5.orders_get()
 
     if orders is None:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return [Order(**order._asdict()) for order in orders]
 
@@ -67,7 +70,9 @@ def orders_calc_margin(payload: CalculateMarginRequest):
     )
 
     if not margin:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return margin
 
@@ -87,7 +92,9 @@ def orders_calc_profit(payload: CalculateProfitRequest):
     )
 
     if not profit:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return profit
 
@@ -123,7 +130,9 @@ def orders_check(payload: TradeRequest):
     )
 
     if not check_result:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return check_result
 
@@ -159,6 +168,8 @@ def orders_send(payload: TradeRequest):
     )
 
     if not result:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return result

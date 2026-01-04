@@ -1,8 +1,8 @@
-from enum import Enum
+from enum import IntEnum
 from pydantic import BaseModel, model_validator, ConfigDict
 
 
-class ErrorCodes(Enum):
+class ErrorCodes(IntEnum):
     RES_S_OK = 1
     RES_E_FAIL = -1
     RES_E_INVALID_PARAMS = -2
@@ -21,7 +21,6 @@ class ErrorCodes(Enum):
 
 
 class ErrorResponse(BaseModel):
-    model_config = ConfigDict(use_enum_values=False)
     code: ErrorCodes
     message: str
 

@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from .models import AccountProperty
 from .errors import ErrorResponse
@@ -16,7 +17,9 @@ def get_acc_info():
     account = mt5.account_info()
 
     if not account:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     # Convert the account named tuple to AccountProperty model
     return AccountProperty(**account._asdict())

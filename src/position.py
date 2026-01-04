@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from .models import Position
 from .errors import ErrorResponse
@@ -31,6 +32,8 @@ def positions_get(
         positions = mt5.positions_get()
 
     if not positions:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return [Position(**position._asdict()) for position in positions]

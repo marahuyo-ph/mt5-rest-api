@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from pydantic import BaseModel
 from .models import SymbolProperty, Tick
@@ -34,7 +35,9 @@ def symbols_get(group: str | None = None):
         symbols = mt5.symbols_get()
 
     if not symbols:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return [
         SymbolPropertyResponse(
@@ -49,7 +52,9 @@ def symbol_info(symbol: str):
     current_symbol = mt5.symbol_info(symbol)
 
     if not current_symbol:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return SymbolProperty(**current_symbol._asdict())
 
@@ -62,7 +67,9 @@ def symbol_info_tick(symbol: str):
     last_tick = mt5.symbol_info_tick(symbol)
 
     if not last_tick:
-        return ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        )
 
     return Tick(**last_tick._asdict())
 
