@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 import pandas as pd  # type: ignore
-from .errors import ErrorResponse
+from .errors import ErrorResponse, ErrorCodes
 from .models import Rate
 
 router = APIRouter(prefix="/rates", tags=["rates"])
@@ -13,16 +13,12 @@ router = APIRouter(prefix="/rates", tags=["rates"])
     "/from/{symbol}/{timeframe}/{date_from}/{count}",
     summary="Get bars from the MetaTrader 5 terminal starting from the specified date.",
     status_code=200,
-    response_model=list[Rate],
 )
 def copy_rates_from(symbol: str, timeframe: int, date_from: datetime, count: int):
     rates = mt5.copy_rates_from(symbol, timeframe, date_from, count)
 
     if rates is None:
-        return JSONResponse(
-            status_code=500,
-            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
-        )
+        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
 
     df = pd.DataFrame(rates)
 
@@ -33,16 +29,12 @@ def copy_rates_from(symbol: str, timeframe: int, date_from: datetime, count: int
     "/from-pos/{symbol}/{timeframe}/{start_pos}/{count}",
     summary="Get bars from the MetaTrader 5 terminal starting from the specified index.",
     status_code=200,
-    response_model=list[Rate],
 )
 def copy_rates_from_pos(symbol: str, timeframe: int, start_pos: int, count: int):
     rates = mt5.copy_rates_from_pos(symbol, timeframe, start_pos, count)
 
     if rates is None:
-        return JSONResponse(
-            status_code=500,
-            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
-        )
+        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
 
     df = pd.DataFrame(rates)
 
@@ -53,7 +45,6 @@ def copy_rates_from_pos(symbol: str, timeframe: int, start_pos: int, count: int)
     "/range/{symbol}/{timeframe}/{date_from}/{date_to}",
     summary="Get bars in the specified date range from the MetaTrader 5 terminal.",
     status_code=200,
-    response_model=list[Rate],
 )
 def copy_rates_range(
     symbol: str, timeframe: int, date_from: datetime, date_to: datetime
@@ -61,10 +52,7 @@ def copy_rates_range(
     rates = mt5.copy_rates_range(symbol, timeframe, date_from, date_to)
 
     if rates is None:
-        return JSONResponse(
-            status_code=500,
-            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
-        )
+        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
 
     df = pd.DataFrame(rates)
 

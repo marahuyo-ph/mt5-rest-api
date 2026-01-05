@@ -32,16 +32,13 @@ def test_positions_get_all(client: TestClient):
     assert response.status_code == 200, "Status code should be 200"
     json_data = response.json()
 
-    # If no positions, should return error dict response from MT5
+    # If no positions, should return empty list (MT5 returns empty tuple)
     if mt5_positions is None or len(mt5_positions) == 0:
-        # Empty positions should return error response (MT5 last_error format)
-        assert isinstance(json_data, dict), (
-            "Empty response should be a dictionary (error response)"
+        # Empty positions should return empty list
+        assert isinstance(json_data, list), (
+            "Empty response should be a list"
         )
-        # MT5 error response has code and message fields
-        assert "code" in json_data or "retcode" in json_data, (
-            "Error response should have code/retcode field"
-        )
+        assert len(json_data) == 0, "Should be empty list"
     else:
         # Verify response structure
         assert isinstance(json_data, list), "Response should be a list"
@@ -70,9 +67,10 @@ def test_positions_get_by_symbol(client: TestClient):
     assert response.status_code == 200, "Status code should be 200"
     json_data = response.json()
 
-    # If no positions, should return error response
+    # If no positions, should return empty list
     if mt5_positions is None or len(mt5_positions) == 0:
-        assert isinstance(json_data, dict), "Error response should be a dictionary"
+        assert isinstance(json_data, list), "Empty response should be a list"
+        assert len(json_data) == 0, "Should be empty list"
     else:
         # Verify response structure
         assert isinstance(json_data, list), "Response should be a list"
@@ -302,8 +300,9 @@ def test_positions_empty_response_handling(client: TestClient):
     assert response.status_code == 200, "Status code should be 200"
     json_data = response.json()
 
-    # Should return error response when no positions
-    assert isinstance(json_data, dict), "Should return error response when no positions"
+    # Should return empty list when no positions
+    assert isinstance(json_data, list), "Should return empty list when no positions"
+    assert len(json_data) == 0, "Should be empty list"
 
 
 def test_positions_consistency(client: TestClient):

@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from .models import Position
-from .errors import ErrorResponse
+from .errors import ErrorResponse, ErrorCodes
 
 router = APIRouter(prefix="/positions", tags=["positions"])
 
@@ -16,7 +16,6 @@ def positions_total() -> int:
     "/",
     summary="Get open positions with the ability to filter by symbol or ticket.",
     status_code=200,
-    response_model=list[Position],
 )
 def positions_get(
     symbol: str | None = None, group: str | None = None, ticket: int | None = None
@@ -32,10 +31,7 @@ def positions_get(
     else:
         positions = mt5.positions_get()
 
-    if not positions:
-        return JSONResponse(
-            status_code=500,
-            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
-        )
+    if positions is None:
+        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
 
     return [Position(**position._asdict()) for position in positions]

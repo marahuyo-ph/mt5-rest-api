@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
-from .errors import ErrorResponse
+from .errors import ErrorResponse, ErrorCodes
 from .models import Order, Deal
 
 router = APIRouter(prefix="/history", tags=["history"])
@@ -21,7 +21,6 @@ def history_orders_total() -> int:
     "/orders/",
     summary="Get orders from trading history with the ability to filter by ticket or position.",
     status_code=200,
-    response_model=list[Order],
 )
 def history_orders_get(
     date_from: datetime | None = None,
@@ -36,18 +35,21 @@ def history_orders_get(
         orders = mt5.history_orders_get(
             date_from=date_from, date_to=date_to, group=group
         )
+    elif date_from and date_to:
+        orders = mt5.history_orders_get(
+            date_from=date_from, date_to=date_to
+        )
     elif ticket:
         orders = mt5.history_orders_get(ticket=ticket)
     elif position:
         orders = mt5.history_orders_get(position=position)
     else:
-        return {"Invalid query": "Invalid query parameters"}
+        return ErrorResponse.model_validate(
+            (ErrorCodes.RES_E_INVALID_PARAMS, "At least one filter parameter is required")
+        ).model_dump()
 
-    if not orders:
-        return JSONResponse(
-            status_code=500,
-            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
-        )
+    if orders is None:
+        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
 
     return [Order(**order._asdict()) for order in orders]
 
@@ -65,7 +67,6 @@ def history_deals_total() -> int:
     "/deals/",
     summary="Get deals from trading history within the specified interval with the ability to filter by ticket or position.",
     status_code=200,
-    response_model=list[Deal],
 )
 def history_deals_get(
     date_from: datetime | None = None,
@@ -78,17 +79,18 @@ def history_deals_get(
 
     if date_from and date_to and group:
         deals = mt5.history_deals_get(date_from=date_from, date_to=date_to, group=group)
+    elif date_from and date_to:
+        deals = mt5.history_deals_get(date_from=date_from, date_to=date_to)
     elif ticket:
         deals = mt5.history_deals_get(ticket=ticket)
     elif position:
         deals = mt5.history_deals_get(position=position)
     else:
-        return {"Invalid query": "Invalid query parameters"}
+        return ErrorResponse.model_validate(
+            (ErrorCodes.RES_E_INVALID_PARAMS, "At least one filter parameter is required")
+        ).model_dump()
 
-    if not deals:
-        return JSONResponse(
-            status_code=500,
-            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
-        )
+    if deals is None:
+        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
 
     return [Deal(**deal._asdict()) for deal in deals]

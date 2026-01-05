@@ -299,7 +299,7 @@ def test_orders_send_structure(client: TestClient):
     # Get data from API
     response = client.post("/orders/send", json=payload)
 
-    assert response.status_code == 201, "Status code should be 201"
+    assert response.status_code == 200, "Status code should be 200"
     json_data = response.json()
 
     # Response should be dictionary (trade result or error)
