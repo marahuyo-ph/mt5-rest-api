@@ -499,7 +499,7 @@ For issues, questions, or suggestions:
 ## 🗺️ Roadmap
 
 Future enhancements:
-- [ ] Authentication and authorization
+- [ ] Authentication via basic auth
 
 ## 📚 Resources
 
