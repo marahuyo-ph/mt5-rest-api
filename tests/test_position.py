@@ -90,7 +90,7 @@ def test_positions_get_by_group(client: TestClient):
     group = "Forex*"
 
     # Get data from MT5
-    mt5_positions = mt5.positions_get(group=group)
+    _mt5_positions = mt5.positions_get(group=group)
 
     # Get data from API
     response = client.get(f"/positions/?group={group}")

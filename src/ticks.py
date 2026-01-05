@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Path, Query
-from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 import pandas as pd  # type: ignore
-from .errors import ErrorResponse, ErrorCodes
+from .errors import ErrorResponse
 from .models import Tick
 
 router = APIRouter(prefix="/ticks", tags=["ticks"])

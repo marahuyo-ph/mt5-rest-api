@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Path, Query
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Path
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 import pandas as pd  # type: ignore
