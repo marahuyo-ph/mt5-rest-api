@@ -8,14 +8,15 @@ router = APIRouter(prefix="/positions", tags=["positions"])
 
 
 @router.get("/total", summary="Get the number of open positions.", status_code=200)
-def positions_total():
-    return mt5.positions_total()
+def positions_total() -> int:
+    return mt5.positions_total() or 0
 
 
 @router.get(
     "/",
     summary="Get open positions with the ability to filter by symbol or ticket.",
     status_code=200,
+    response_model=list[Position],
 )
 def positions_get(
     symbol: str | None = None, group: str | None = None, ticket: int | None = None
@@ -33,7 +34,8 @@ def positions_get(
 
     if not positions:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     return [Position(**position._asdict()) for position in positions]

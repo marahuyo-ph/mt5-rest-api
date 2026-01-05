@@ -1,5 +1,5 @@
 from enum import IntEnum
-from pydantic import BaseModel, model_validator, ConfigDict
+from pydantic import BaseModel, model_validator
 
 
 class ErrorCodes(IntEnum):

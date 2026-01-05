@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 from .errors import ErrorResponse
+from .models import Order, Deal
 
 router = APIRouter(prefix="/history", tags=["history"])
 
@@ -12,14 +13,15 @@ router = APIRouter(prefix="/history", tags=["history"])
     summary="Get the number of orders in trading history within the specified interval.",
     status_code=200,
 )
-def history_orders_total():
-    return mt5.history_orders_total()
+def history_orders_total() -> int:
+    return mt5.history_orders_total() or 0
 
 
 @router.get(
     "/orders/",
     summary="Get orders from trading history with the ability to filter by ticket or position.",
     status_code=200,
+    response_model=list[Order],
 )
 def history_orders_get(
     date_from: datetime | None = None,
@@ -43,10 +45,11 @@ def history_orders_get(
 
     if not orders:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
-    return [order._asdict() for order in orders]
+    return [Order(**order._asdict()) for order in orders]
 
 
 @router.get(
@@ -54,14 +57,15 @@ def history_orders_get(
     summary="Get the number of deals in trading history within the specified interval.",
     status_code=200,
 )
-def history_deals_total():
-    return mt5.history_deals_total()
+def history_deals_total() -> int:
+    return mt5.history_deals_total() or 0
 
 
 @router.get(
     "/deals/",
     summary="Get deals from trading history within the specified interval with the ability to filter by ticket or position.",
     status_code=200,
+    response_model=list[Deal],
 )
 def history_deals_get(
     date_from: datetime | None = None,
@@ -83,7 +87,8 @@ def history_deals_get(
 
     if not deals:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
-    return [deal._asdict() for deal in deals]
+    return [Deal(**deal._asdict()) for deal in deals]

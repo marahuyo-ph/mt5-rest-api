@@ -18,7 +18,8 @@ def get_acc_info():
 
     if not account:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     # Convert the account named tuple to AccountProperty model

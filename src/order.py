@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
-from .models import TradeRequest, Order
+from .models import TradeRequest, Order, TradeCheckResult, TradeResult
 from pydantic import BaseModel
 from .errors import ErrorResponse
 
@@ -28,14 +28,15 @@ class CalculateProfitRequest(BaseModel):
     summary="Get the number of active orders.",
     status_code=200,
 )
-def orders_total():
-    return mt5.orders_total()
+def orders_total() -> int:
+    return mt5.orders_total() or 0
 
 
 @router.get(
     "/",
     summary="Get active orders with the ability to filter by symbol or ticket.",
     status_code=200,
+    response_model=list[Order],
 )
 def orders_get(
     symbol: str | None = None, group: str | None = None, ticket: int | None = None
@@ -53,7 +54,8 @@ def orders_get(
 
     if orders is None:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     return [Order(**order._asdict()) for order in orders]
@@ -63,6 +65,7 @@ def orders_get(
     "/calculate-margin",
     summary="Return margin in the account currency to perform a specified trading operation.",
     status_code=200,
+    response_model=float,
 )
 def orders_calc_margin(payload: CalculateMarginRequest):
     margin = mt5.order_calc_margin(
@@ -71,7 +74,8 @@ def orders_calc_margin(payload: CalculateMarginRequest):
 
     if not margin:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     return margin
@@ -81,6 +85,7 @@ def orders_calc_margin(payload: CalculateMarginRequest):
     "/calculate-profit",
     summary="Return profit in the account currency for a specified trading operation.",
     status_code=200,
+    response_model=float,
 )
 def orders_calc_profit(payload: CalculateProfitRequest):
     profit = mt5.order_calc_profit(
@@ -93,7 +98,8 @@ def orders_calc_profit(payload: CalculateProfitRequest):
 
     if not profit:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     return profit
@@ -103,6 +109,7 @@ def orders_calc_profit(payload: CalculateProfitRequest):
     "/check",
     summary="Check funds sufficiency for performing a required trading operation. Check result are returned as the TradeCheckResult structure.",
     status_code=200,
+    response_model=TradeCheckResult,
 )
 def orders_check(payload: TradeRequest):
     check_result = mt5.order_check(
@@ -131,7 +138,8 @@ def orders_check(payload: TradeRequest):
 
     if not check_result:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     return check_result
@@ -141,6 +149,7 @@ def orders_check(payload: TradeRequest):
     "/send",
     summary="Send a request to perform a trading operation from the terminal to the trade server. The function is similar to OrderSend.",
     status_code=201,
+    response_model=TradeResult,
 )
 def orders_send(payload: TradeRequest):
     result = mt5.order_send(
@@ -169,7 +178,8 @@ def orders_send(payload: TradeRequest):
 
     if not result:
         return JSONResponse(
-            status_code=500, content=ErrorResponse.model_validate(mt5.last_error()).model_dump()
+            status_code=500,
+            content=ErrorResponse.model_validate(mt5.last_error()).model_dump(),
         )
 
     return result

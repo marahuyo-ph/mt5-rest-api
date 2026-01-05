@@ -105,22 +105,34 @@ class TradeRequest(BaseModel):
     """
 
     action: TradeAction  # Trade operation type
-    magic: int = Field(default=0, summary="Expert Advisor ID (magic number)")
-    order: int = Field(default=0, summary="Order ticket (for modifications)")
+    magic: int = Field(
+        default=0, json_schema_extra={"summary": "Expert Advisor ID (magic number)"}
+    )
+    order: int = Field(
+        default=0, json_schema_extra={"summary": "Order ticket (for modifications)"}
+    )
     symbol: str  # Trade symbol
     volume: float  # Requested volume in lots
-    price: float = Field(default=0.0, summary="Order price")
-    stoplimit: float = Field(default=0.0, summary="StopLimit price")
-    sl: float = Field(default=0.0, summary="Stop Loss level")
-    tp: float = Field(default=0.0, summary="Take Profit level")
-    deviation: float = Field(default=0.0, summary="Max price deviation in points")
+    price: float = Field(default=0.0, json_schema_extra={"summary": "Order price"})
+    stoplimit: float = Field(
+        default=0.0, json_schema_extra={"summary": "StopLimit price"}
+    )
+    sl: float = Field(default=0.0, json_schema_extra={"summary": "Stop Loss level"})
+    tp: float = Field(default=0.0, json_schema_extra={"summary": "Take Profit level"})
+    deviation: float = Field(
+        default=0.0, json_schema_extra={"summary": "Max price deviation in points"}
+    )
     type: OrderType  # Order type
     type_filling: OrderFilling  # Order filling type
     type_time: OrderTime  # Order expiration type
-    expiration: int = Field(default=0, summary="Order expiration time (datetime)")
-    comment: str = Field(default="", summary="Order comment")
-    position: int = Field(default=0, summary="Position ticket")
-    position_by: int = Field(default=0, summary="Opposite position ticket")
+    expiration: int = Field(
+        default=0, json_schema_extra={"summary": "Order expiration time (datetime)"}
+    )
+    comment: str = Field(default="", json_schema_extra={"summary": "Order comment"})
+    position: int = Field(default=0, json_schema_extra={"summary": "Position ticket"})
+    position_by: int = Field(
+        default=0, json_schema_extra={"summary": "Opposite position ticket"}
+    )
 
 
 class TradeCheckResult(BaseModel):
@@ -136,7 +148,9 @@ class TradeCheckResult(BaseModel):
     margin: float  # Required margin
     margin_free: float  # Free margin after trade operation
     margin_level: float  # Margin level percentage
-    comment: str = Field(default="", summary="Return code description")
+    comment: str = Field(
+        default="", json_schema_extra={"summary": "Return code description"}
+    )
 
 
 class TradeResult(BaseModel):
@@ -146,15 +160,25 @@ class TradeResult(BaseModel):
     """
 
     retcode: int  # Trade server return code
-    deal: int = Field(default=0, summary="Deal ticket if executed")
-    order: int = Field(default=0, summary="Order ticket if placed")
-    volume: float = Field(default=0.0, summary="Deal volume confirmed by broker")
-    price: float = Field(default=0.0, summary="Deal price confirmed by broker")
-    bid: float = Field(default=0.0, summary="Current Bid price")
-    ask: float = Field(default=0.0, summary="Current Ask price")
-    comment: str = Field(default="", summary="Broker comment")
-    request_id: int = Field(default=0, summary="Request ID")
-    retcode_external: int = Field(default=0, summary="External system error code")
+    deal: int = Field(
+        default=0, json_schema_extra={"summary": "Deal ticket if executed"}
+    )
+    order: int = Field(
+        default=0, json_schema_extra={"summary": "Order ticket if placed"}
+    )
+    volume: float = Field(
+        default=0.0, json_schema_extra={"summary": "Deal volume confirmed by broker"}
+    )
+    price: float = Field(
+        default=0.0, json_schema_extra={"summary": "Deal price confirmed by broker"}
+    )
+    bid: float = Field(default=0.0, json_schema_extra={"summary": "Current Bid price"})
+    ask: float = Field(default=0.0, json_schema_extra={"summary": "Current Ask price"})
+    comment: str = Field(default="", json_schema_extra={"summary": "Broker comment"})
+    request_id: int = Field(default=0, json_schema_extra={"summary": "Request ID"})
+    retcode_external: int = Field(
+        default=0, json_schema_extra={"summary": "External system error code"}
+    )
 
 
 class TradeTransaction(BaseModel):
@@ -163,19 +187,39 @@ class TradeTransaction(BaseModel):
     Received by OnTradeTransaction() event handler.
     """
 
-    deal: int = Field(default=0, summary="Deal ticket")
-    order: int = Field(default=0, summary="Order ticket")
-    symbol: str = Field(default="", summary="Trade symbol")
+    deal: int = Field(default=0, json_schema_extra={"summary": "Deal ticket"})
+    order: int = Field(default=0, json_schema_extra={"summary": "Order ticket"})
+    symbol: str = Field(default="", json_schema_extra={"summary": "Trade symbol"})
     type: TradeTransactionType  # Trade transaction type
-    order_type: Optional[OrderType] = Field(default=None, summary="Order type")
-    order_state: Optional[OrderState] = Field(default=None, summary="Order state")
-    deal_type: Optional[DealType] = Field(default=None, summary="Deal type")
-    time_type: Optional[OrderTime] = Field(default=None, summary="Order time type")
-    time_expiration: int = Field(default=0, summary="Order expiration time (datetime)")
-    price: float = Field(default=0.0, summary="Order/deal/position price")
-    price_trigger: float = Field(default=0.0, summary="Stop limit activation price")
-    price_sl: float = Field(default=0.0, summary="Stop Loss level")
-    price_tp: float = Field(default=0.0, summary="Take Profit level")
-    volume: float = Field(default=0.0, summary="Volume in lots")
-    position: int = Field(default=0, summary="Position ticket")
-    position_by: int = Field(default=0, summary="Opposite position ticket")
+    order_type: Optional[OrderType] = Field(
+        default=None, json_schema_extra={"summary": "Order type"}
+    )
+    order_state: Optional[OrderState] = Field(
+        default=None, json_schema_extra={"summary": "Order state"}
+    )
+    deal_type: Optional[DealType] = Field(
+        default=None, json_schema_extra={"summary": "Deal type"}
+    )
+    time_type: Optional[OrderTime] = Field(
+        default=None, json_schema_extra={"summary": "Order time type"}
+    )
+    time_expiration: int = Field(
+        default=0, json_schema_extra={"summary": "Order expiration time (datetime)"}
+    )
+    price: float = Field(
+        default=0.0, json_schema_extra={"summary": "Order/deal/position price"}
+    )
+    price_trigger: float = Field(
+        default=0.0, json_schema_extra={"summary": "Stop limit activation price"}
+    )
+    price_sl: float = Field(
+        default=0.0, json_schema_extra={"summary": "Stop Loss level"}
+    )
+    price_tp: float = Field(
+        default=0.0, json_schema_extra={"summary": "Take Profit level"}
+    )
+    volume: float = Field(default=0.0, json_schema_extra={"summary": "Volume in lots"})
+    position: int = Field(default=0, json_schema_extra={"summary": "Position ticket"})
+    position_by: int = Field(
+        default=0, json_schema_extra={"summary": "Opposite position ticket"}
+    )

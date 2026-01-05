@@ -68,21 +68,35 @@ class Deal(BaseModel):
     time_msc: int  # Deal execution time in milliseconds since 01.01.1970
     type: DealType  # Deal type
     entry: DealEntry  # Deal entry type
-    magic: int = Field(default=0, summary="Deal magic number")
-    reason: Optional[DealReason] = Field(default=None, summary="Deal execution reason")
-    position_id: int = Field(default=0, summary="Position identifier")
+    magic: int = Field(default=0, json_schema_extra={"summary": "Deal magic number"})
+    reason: Optional[DealReason] = Field(
+        default=None, json_schema_extra={"summary": "Deal execution reason"}
+    )
+    position_id: int = Field(
+        default=0, json_schema_extra={"summary": "Position identifier"}
+    )
 
     # Double Properties
     volume: float  # Deal volume
     price: float  # Deal price
-    commission: float = Field(default=0.0, summary="Deal commission")
-    swap: float = Field(default=0.0, summary="Cumulative swap on close")
-    profit: float = Field(default=0.0, summary="Deal profit/loss")
-    fee: float = Field(default=0.0, summary="Deal fee charged immediately")
-    sl: float = Field(default=0.0, summary="Stop Loss level")
-    tp: float = Field(default=0.0, summary="Take Profit level")
+    commission: float = Field(
+        default=0.0, json_schema_extra={"summary": "Deal commission"}
+    )
+    swap: float = Field(
+        default=0.0, json_schema_extra={"summary": "Cumulative swap on close"}
+    )
+    profit: float = Field(
+        default=0.0, json_schema_extra={"summary": "Deal profit/loss"}
+    )
+    fee: float = Field(
+        default=0.0, json_schema_extra={"summary": "Deal fee charged immediately"}
+    )
+    sl: float = Field(default=0.0, json_schema_extra={"summary": "Stop Loss level"})
+    tp: float = Field(default=0.0, json_schema_extra={"summary": "Take Profit level"})
 
     # String Properties
     symbol: str  # Deal symbol
-    comment: str = Field(default="", summary="Deal comment")
-    external_id: str = Field(default="", summary="External deal identifier")
+    comment: str = Field(default="", json_schema_extra={"summary": "Deal comment"})
+    external_id: str = Field(
+        default="", json_schema_extra={"summary": "External deal identifier"}
+    )

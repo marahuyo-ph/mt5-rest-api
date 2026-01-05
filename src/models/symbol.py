@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from enum import IntEnum
-import MetaTrader5 as mt5 #type: ignore
+import MetaTrader5 as mt5  # type: ignore
 
 
 # Symbol Enumerations

@@ -28,24 +28,39 @@ class Order(BaseModel):
     time_setup: int  # Order setup time (datetime)
     type: int  # Order type
     state: int  # Order state
-    time_expiration: int = Field(default=0, summary="Order expiration time (datetime)")
+    time_expiration: int = Field(
+        default=0, json_schema_extra={"summary": "Order expiration time (datetime)"}
+    )
     time_done: int = Field(
-        default=0, summary="Order execution/cancellation time (datetime)"
+        default=0,
+        json_schema_extra={"summary": "Order execution/cancellation time (datetime)"},
     )
     time_setup_msc: int = Field(
-        default=0, summary="Order setup time in milliseconds since 01.01.1970"
+        default=0,
+        json_schema_extra={
+            "summary": "Order setup time in milliseconds since 01.01.1970"
+        },
     )
     time_done_msc: int = Field(
-        default=0, summary="Order execution time in milliseconds since 01.01.1970"
+        default=0,
+        json_schema_extra={
+            "summary": "Order execution time in milliseconds since 01.01.1970"
+        },
     )
     type_filling: int  # Order filling type
     type_time: int  # Order lifetime type
-    magic: int = Field(default=0, summary="Expert Advisor ID (magic number)")
-    reason: Optional[OrderReason] = Field(
-        default=None, summary="Order placement reason"
+    magic: int = Field(
+        default=0, json_schema_extra={"summary": "Expert Advisor ID (magic number)"}
     )
-    position_id: int = Field(default=0, summary="Position identifier")
-    position_by_id: int = Field(default=0, summary="Opposite position identifier")
+    reason: Optional[OrderReason] = Field(
+        default=None, json_schema_extra={"summary": "Order placement reason"}
+    )
+    position_id: int = Field(
+        default=0, json_schema_extra={"summary": "Position identifier"}
+    )
+    position_by_id: int = Field(
+        default=0, json_schema_extra={"summary": "Opposite position identifier"}
+    )
 
     # Double Properties
     volume_initial: float  # Order initial volume
@@ -53,12 +68,16 @@ class Order(BaseModel):
     price_open: float  # Order opening price
     sl: float  # Stop Loss value
     tp: float  # Take Profit value
-    price_current: float = Field(default=0.0, summary="Current price of order symbol")
+    price_current: float = Field(
+        default=0.0, json_schema_extra={"summary": "Current price of order symbol"}
+    )
     price_stoplimit: float = Field(
-        default=0.0, summary="Limit order price for StopLimit"
+        default=0.0, json_schema_extra={"summary": "Limit order price for StopLimit"}
     )
 
     # String Properties
     symbol: str  # Order symbol
-    comment: str = Field(default="", summary="Order comment")
-    external_id: str = Field(default="", summary="External order identifier")
+    comment: str = Field(default="", json_schema_extra={"summary": "Order comment"})
+    external_id: str = Field(
+        default="", json_schema_extra={"summary": "External order identifier"}
+    )

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from enum import IntEnum
-import MetaTrader5 as mt5 #type: ignore
+import MetaTrader5 as mt5  # type: ignore
 
 
 # Account Enumerations
@@ -22,9 +22,13 @@ class AccountStopoutMode(IntEnum):
 class AccountMarginMode(IntEnum):
     """Account margin mode enumeration"""
 
-    RETAIL_NETTING = mt5.ACCOUNT_MARGIN_MODE_RETAIL_NETTING  # OTC markets, netting mode (one position per symbol)
+    RETAIL_NETTING = (
+        mt5.ACCOUNT_MARGIN_MODE_RETAIL_NETTING
+    )  # OTC markets, netting mode (one position per symbol)
     EXCHANGE = mt5.ACCOUNT_MARGIN_MODE_EXCHANGE  # Exchange markets with discounts
-    RETAIL_HEDGING = mt5.ACCOUNT_MARGIN_MODE_RETAIL_HEDGING  # Exchange markets with hedging (multiple positions per symbol)
+    RETAIL_HEDGING = (
+        mt5.ACCOUNT_MARGIN_MODE_RETAIL_HEDGING
+    )  # Exchange markets with hedging (multiple positions per symbol)
 
 
 # Account Properties

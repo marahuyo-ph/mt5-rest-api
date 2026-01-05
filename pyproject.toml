@@ -27,5 +27,8 @@ typeCheckingMode = "standard"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+filterwarnings = [
+    "ignore::DeprecationWarning:pydantic",
+]
 python_files = ["test_*.py", "*_test.py"]
 asyncio_mode = "auto"
