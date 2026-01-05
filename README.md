@@ -416,7 +416,9 @@ dev = [
 
 ## 🐛 Error Handling
 
-The API returns structured error responses with the following format:
+The API uses the official MetaTrader5 error system and returns structured error responses using [`mt5.last_error()`](https://www.mql5.com/en/docs/python_metatrader5/mt5lasterror_py) when operations fail. All MetaTrader5-related errors return a **500 Internal Server Error** status code.
+
+Error response format:
 
 ```json
 {
@@ -425,11 +427,28 @@ The API returns structured error responses with the following format:
 }
 ```
 
-Common error codes:
-- `-1`: General error
-- `-2`: Invalid parameters
-- `500`: Internal server error
-- `400`: Bad request
+### Common Error Codes
+
+| Code | Constant | Description |
+|------|----------|-------------|
+| 1 | RES_S_OK | Generic success |
+| -1 | RES_E_FAIL | Generic fail |
+| -2 | RES_E_INVALID_PARAMS | Invalid arguments/parameters |
+| -3 | RES_E_NO_MEMORY | No memory condition |
+| -4 | RES_E_NOT_FOUND | No history |
+| -5 | RES_E_INVALID_VERSION | Invalid version |
+| -6 | RES_E_AUTH_FAILED | Authorization failed |
+| -7 | RES_E_UNSUPPORTED | Unsupported method |
+| -8 | RES_E_AUTO_TRADING_DISABLED | Auto-trading disabled |
+| -10000 | RES_E_INTERNAL_FAIL | Internal IPC general error |
+
+For a complete list of error codes, see the [official MT5 Python documentation](https://www.mql5.com/en/docs/python_metatrader5/mt5lasterror_py).
+
+### HTTP Status Codes
+
+- `200`: Successful request
+- `400`: Bad request (invalid parameters)
+- `500`: Internal server error (MT5 operation failed)
 
 ## 📄 API Documentation
 
