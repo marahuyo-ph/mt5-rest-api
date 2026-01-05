@@ -19,8 +19,8 @@ app = FastAPI(
     description="A comprehensive REST API for MetaTrader5 terminal operations, providing endpoints for account management, trading operations, market data retrieval, and historical analysis.",
     contact={
         "name": "MT5 REST API Support",
-        "url": "https://github.com/yourusername/mt5-rest-api",
-        "email": "support@example.com",
+        "url": "https://github.com/marahuyo-ph/mt5-rest-api",
+        "email": "karlalferezfx@gmail.com",
     },
     license_info={
         "name": "MIT",
