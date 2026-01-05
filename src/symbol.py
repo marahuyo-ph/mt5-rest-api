@@ -1,9 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from pydantic import BaseModel
 from .models import SymbolProperty, Tick
-from .errors import ErrorResponse, ErrorCodes
+from .errors import ErrorResponse
 
 
 class SymbolPropertyResponse(BaseModel):
@@ -16,7 +16,29 @@ router = APIRouter(prefix="/symbols", tags=["symbol"])
 
 @router.get(
     "/total",
-    summary="Get the number of all financial instruments in the MetaTrader 5 terminal.",
+    summary="Get the number of all financial instruments",
+    description="Retrieves the total count of all financial instruments (symbols) available in the MetaTrader5 terminal.",
+    responses={
+        200: {
+            "description": "Total symbol count retrieved successfully",
+            "content": {
+                "application/json": {
+                    "example": 3000
+                }
+            },
+        },
+        500: {
+            "description": "Failed to retrieve symbol count",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "code": -1,
+                        "message": "Failed to retrieve symbol count",
+                    }
+                }
+            },
+        },
+    },
 )
 def symbols_total() -> int:
     return mt5.symbols_total() or 0
@@ -24,11 +46,90 @@ def symbols_total() -> int:
 
 @router.get(
     "/",
-    summary="Get all financial instruments from the MetaTrader 5 terminal.",
+    summary="Get all financial instruments from the MetaTrader5 terminal",
+    description="Retrieves a list of all financial instruments (symbols) available in the MetaTrader5 terminal. Can be filtered by group pattern to retrieve specific symbol groups.",
     status_code=200,
     response_model=list[SymbolPropertyResponse],
+    responses={
+        200: {
+            "description": "Symbols retrieved successfully",
+            "content": {
+                "application/json": {
+                    "example": [
+                        {
+                            "name": "EURUSD",
+                            "info": {
+                                "name": "EURUSD",
+                                "custom": False,
+                                "chart_mode": 0,
+                                "select": True,
+                                "visible": True,
+                                "session_deals": 15000,
+                                "session_buy_orders": 150,
+                                "session_sell_orders": 140,
+                                "volume": 50000000,
+                                "volumehigh": 55000000,
+                                "volumelow": 45000000,
+                                "time": 1704067200,
+                                "digits": 5,
+                                "spread": 10,
+                                "spread_real": 10,
+                                "trade_mode": 1,
+                                "start_time": 0,
+                                "expiration_time": 0,
+                                "trade_stops": 0,
+                                "trade_freeze_level": 0,
+                                "trade_execution_mode": 0,
+                                "swap_mode": 1,
+                                "swap_long": -2.5,
+                                "swap_short": -2.8,
+                                "swap_sunday": 3.0,
+                                "swap_monday": 0.0,
+                                "swap_tuesday": 0.0,
+                                "swap_wednesday": 0.0,
+                                "swap_thursday": 0.0,
+                                "swap_friday": 0.0,
+                                "swap_saturday": 0.0,
+                                "margin_initial": 0.0,
+                                "margin_maintenance": 0.0,
+                                "session_interest": 0.0,
+                                "ticks_booksize": 0,
+                                "trade_calc_mode": 0,
+                                "mode": 1,
+                                "bid": 1.0850,
+                                "ask": 1.0852,
+                                "last": 1.0850,
+                                "session_volume": 50000000,
+                                "session_open": 1.0825,
+                                "session_close": 0.0,
+                                "session_high": 1.0890,
+                                "session_low": 1.0815,
+                                "volume_real": 50000000,
+                                "price_open": 1.0825,
+                                "settle": 0.0,
+                                "price_high": 1.0890,
+                                "price_low": 1.0815,
+                                "price_weighted_avg": 1.0850,
+                            },
+                        }
+                    ]
+                }
+            },
+        },
+        500: {
+            "description": "Failed to retrieve symbols",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "code": -1,
+                        "message": "Failed to retrieve symbols",
+                    }
+                }
+            },
+        },
+    },
 )
-def symbols_get(group: str | None = None):
+def symbols_get(group: str | None = Query(None, description="Symbol group filter (e.g., 'Forex', 'Indices')")):
     symbols = None
 
     if group:
