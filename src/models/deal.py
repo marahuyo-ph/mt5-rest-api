@@ -1,57 +1,58 @@
 from pydantic import BaseModel, Field
 from enum import IntEnum
 from typing import Optional
+import MetaTrader5 as mt5 # type: ignore
 
 
 # Deal Type Enumeration
 class DealType(IntEnum):
     """Deal type enumeration"""
 
-    BUY = 0  # Buy
-    SELL = 1  # Sell
-    BALANCE = 2  # Balance
-    CREDIT = 3  # Credit
-    CHARGE = 4  # Additional charge
-    CORRECTION = 5  # Correction
-    BONUS = 6  # Bonus
-    COMMISSION = 7  # Additional commission
-    COMMISSION_DAILY = 8  # Daily commission
-    COMMISSION_MONTHLY = 9  # Monthly commission
-    COMMISSION_AGENT_DAILY = 10  # Daily agent commission
-    COMMISSION_AGENT_MONTHLY = 11  # Monthly agent commission
-    INTEREST = 12  # Interest rate
-    BUY_CANCELED = 13  # Canceled buy deal
-    SELL_CANCELED = 14  # Canceled sell deal
-    DIVIDEND = 15  # Dividend operations
-    DIVIDEND_FRANKED = 16  # Franked dividend operations
-    TAX = 17  # Tax charges
+    BUY = mt5.DEAL_TYPE_BUY  # Buy
+    SELL = mt5.DEAL_TYPE_SELL # Sell
+    BALANCE = mt5.DEAL_TYPE_BALANCE  # Balance
+    CREDIT = mt5.DEAL_TYPE_CREDIT  # Credit
+    CHARGE = mt5.DEAL_TYPE_CHARGE  # Additional charge
+    CORRECTION = mt5.DEAL_TYPE_CORRECTION  # Correction
+    BONUS = mt5.DEAL_TYPE_BONUS  # Bonus
+    COMMISSION = mt5.DEAL_TYPE_COMMISSION # Additional commission
+    COMMISSION_DAILY = mt5.DEAL_TYPE_COMMISSION_DAILY  # Daily commission
+    COMMISSION_MONTHLY = mt5.DEAL_TYPE_COMMISSION_MONTHLY  # Monthly commission
+    COMMISSION_AGENT_DAILY = mt5.DEAL_TYPE_COMMISSION_AGENT_DAILY  # Daily agent commission
+    COMMISSION_AGENT_MONTHLY = mt5.DEAL_TYPE_COMMISSION_AGENT_MONTHLY  # Monthly agent commission
+    INTEREST = mt5.DEAL_TYPE_INTEREST  # Interest rate
+    BUY_CANCELED = mt5.DEAL_TYPE_BUY_CANCELED  # Canceled buy deal
+    SELL_CANCELED = mt5.DEAL_TYPE_SELL_CANCELED  # Canceled sell deal
+    DIVIDEND = mt5.DEAL_DIVIDEND  # Dividend operations
+    DIVIDEND_FRANKED = mt5.DEAL_DIVIDEND_FRANKED  # Franked dividend operations
+    TAX = mt5.DEAL_TAX  # Tax charges
 
 
 # Deal Entry Enumeration
 class DealEntry(IntEnum):
     """Deal entry enumeration"""
 
-    IN = 0  # Entry in (position opening)
-    OUT = 1  # Entry out (position closing)
-    INOUT = 2  # Reverse (position reversal)
-    OUT_BY = 3  # Close by opposite position
+    IN = mt5.DEAL_ENTRY_IN  # Entry in (position opening)
+    OUT = mt5.DEAL_ENTRY_OUT  # Entry out (position closing)
+    INOUT = mt5.DEAL_ENTRY_INOUT  # Reverse (position reversal)
+    OUT_BY = mt5.DEAL_ENTRY_OUT_BY  # Close by opposite position
 
 
 # Deal Reason Enumeration
 class DealReason(IntEnum):
     """Deal reason enumeration"""
 
-    CLIENT = 0  # Deal executed from desktop terminal
-    MOBILE = 1  # Deal executed from mobile application
-    WEB = 2  # Deal executed from web platform
-    EXPERT = 3  # Deal executed from MQL5 program
-    SL = 4  # Deal executed by Stop Loss
-    TP = 5  # Deal executed by Take Profit
-    SO = 6  # Deal executed by Stop Out
-    ROLLOVER = 7  # Deal executed due to rollover
-    VMARGIN = 8  # Deal executed after variation margin charge
-    SPLIT = 9  # Deal executed after price split
-    CORPORATE_ACTION = 10  # Deal executed due to corporate action
+    CLIENT = mt5.DEAL_REASON_CLIENT  # Deal executed from desktop terminal
+    MOBILE = mt5.DEAL_REASON_MOBILE  # Deal executed from mobile application
+    WEB = mt5.DEAL_REASON_WEB  # Deal executed from web platform
+    EXPERT = mt5.DEAL_REASON_EXPERT  # Deal executed from MQL5 program
+    SL = mt5.DEAL_REASON_SL  # Deal executed by Stop Loss
+    TP = mt5.DEAL_REASON_TP  # Deal executed by Take Profit
+    SO = mt5.DEAL_REASON_SO  # Deal executed by Stop Out
+    ROLLOVER = mt5.DEAL_REASON_ROLLOVER  # Deal executed due to rollover
+    VMARGIN = mt5.DEAL_REASON_VMARGIN  # Deal executed after variation margin charge
+    SPLIT = mt5.DEAL_REASON_SPLIT  # Deal executed after price split
+    CORPORATE_ACTION =  -1  # Deal executed due to corporate action
 
 
 # Deal Model

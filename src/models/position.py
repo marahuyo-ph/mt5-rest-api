@@ -1,24 +1,25 @@
 from pydantic import BaseModel, Field
 from enum import IntEnum
 from typing import Optional
+import MetaTrader5 as mt5 # type: ignore
 
 
 # Position Type Enumeration
 class PositionType(IntEnum):
     """Position type enumeration"""
 
-    BUY = 0  # Buy position
-    SELL = 1  # Sell position
+    BUY = mt5.POSITION_TYPE_BUY  # Buy position
+    SELL = mt5.POSITION_TYPE_SELL  # Sell position
 
 
 # Position Reason Enumeration
 class PositionReason(IntEnum):
     """Position reason enumeration"""
 
-    CLIENT = 0  # Position opened from desktop terminal
-    MOBILE = 1  # Position opened from mobile application
-    WEB = 2  # Position opened from web platform
-    EXPERT = 3  # Position opened from MQL5 program
+    CLIENT = mt5.POSITION_REASON_CLIENT  # Position opened from desktop terminal
+    MOBILE = mt5.POSITION_REASON_MOBILE  # Position opened from mobile application
+    WEB = mt5.POSITION_REASON_WEB  # Position opened from web platform
+    EXPERT = mt5.POSITION_REASON_EXPERT  # Position opened from MQL5 program
 
 
 # Position Model

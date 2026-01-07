@@ -169,6 +169,7 @@ def symbol_info(symbol: str):
     "/{symbol}/last-tick",
     summary="Get the last tick for the specified financial instrument.",
     status_code=200,
+    response_model=list[Tick]
 )
 def symbol_info_tick(symbol: str):
     last_tick = mt5.symbol_info_tick(symbol)

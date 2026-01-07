@@ -1,19 +1,19 @@
 from pydantic import BaseModel, Field
 from enum import IntEnum
 from typing import Optional
-
+import MetaTrader5 as mt5 # type: ignore
 
 # Order Reason Enumeration
 class OrderReason(IntEnum):
     """Order reason enumeration"""
 
-    CLIENT = 0  # Order placed from desktop terminal
-    MOBILE = 1  # Order placed from mobile application
-    WEB = 2  # Order placed from web platform
-    EXPERT = 3  # Order placed from MQL5 program
-    SL = 4  # Order placed as result of Stop Loss activation
-    TP = 5  # Order placed as result of Take Profit activation
-    SO = 6  # Order placed as result of Stop Out event
+    CLIENT = mt5.ORDER_REASON_CLIENT  # Order placed from desktop terminal
+    MOBILE = mt5.ORDER_REASON_MOBILE  # Order placed from mobile application
+    WEB = mt5.ORDER_REASON_WEB  # Order placed from web platform
+    EXPERT = mt5.ORDER_REASON_EXPERT  # Order placed from MQL5 program
+    SL = mt5.ORDER_REASON_SL  # Order placed as result of Stop Loss activation
+    TP = mt5.ORDER_REASON_TP  # Order placed as result of Take Profit activation
+    SO = mt5.ORDER_REASON_SO  # Order placed as result of Stop Out event
 
 
 # Order Model

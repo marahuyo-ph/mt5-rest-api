@@ -7,27 +7,27 @@ import MetaTrader5 as mt5  # type: ignore
 class SymbolChartMode(IntEnum):
     """Symbol chart mode enumeration"""
 
-    BID = 0  # Bars are based on Bid prices
-    LAST = 1  # Bars are based on Last prices
+    BID = mt5.SYMBOL_CHART_MODE_BID  # Bars are based on Bid prices
+    LAST = mt5.SYMBOL_CHART_MODE_LAST  # Bars are based on Last prices
 
 
 class SymbolTradeMode(IntEnum):
     """Symbol trade mode enumeration"""
 
-    DISABLED = 0  # Trade is disabled for the symbol
-    LONGONLY = 1  # Allowed only long positions
-    SHORTONLY = 2  # Allowed only short positions
-    CLOSEONLY = 3  # Allowed only position close operations
-    FULL = 4  # No trade restrictions
+    DISABLED = mt5.SYMBOL_TRADE_MODE_DISABLED  # Trade is disabled for the symbol
+    LONGONLY = mt5.SYMBOL_TRADE_MODE_LONGONLY  # Allowed only long positions
+    SHORTONLY = mt5.SYMBOL_TRADE_MODE_SHORTONLY # Allowed only short positions
+    CLOSEONLY = mt5.SYMBOL_TRADE_MODE_CLOSEONLY  # Allowed only position close operations
+    FULL = mt5.SYMBOL_TRADE_MODE_FULL  # No trade restrictions
 
 
 class SymbolTradeExecution(IntEnum):
     """Symbol trade execution enumeration"""
 
-    REQUEST = 0  # Execution by request
-    INSTANT = 1  # Instant execution
-    MARKET = 2  # Market execution
-    EXCHANGE = 3  # Exchange execution
+    REQUEST = mt5.SYMBOL_TRADE_EXECUTION_REQUEST # Execution by request
+    INSTANT = mt5.SYMBOL_TRADE_EXECUTION_INSTANT  # Instant execution
+    MARKET = mt5.SYMBOL_TRADE_EXECUTION_MARKET  # Market execution
+    EXCHANGE = mt5.SYMBOL_TRADE_EXECUTION_EXCHANGE  # Exchange execution
 
 
 class SymbolCalcMode(IntEnum):
@@ -79,23 +79,23 @@ class DayOfWeek(IntEnum):
 class SymbolOrderGtcMode(IntEnum):
     """Symbol order GTC mode enumeration"""
 
-    GTC = 0  # Valid until explicit cancellation
-    DAILY = 1  # Valid during one trading day
-    DAILY_EXCLUDING_STOPS = 2  # Daily, but preserve Stop Loss/Take Profit
+    GTC = mt5.SYMBOL_ORDERS_GTC  # Valid until explicit cancellation
+    DAILY = mt5.SYMBOL_ORDERS_DAILY  # Valid during one trading day
+    DAILY_EXCLUDING_STOPS = mt5.SYMBOL_ORDERS_DAILY_NO_STOPS # Daily, but preserve Stop Loss/Take Profit
 
 
 class SymbolOptionMode(IntEnum):
     """Symbol option mode enumeration"""
 
-    EUROPEAN = 0  # European option
-    AMERICAN = 1  # American option
+    EUROPEAN = mt5.SYMBOL_OPTION_MODE_EUROPEAN  # European option
+    AMERICAN = mt5.SYMBOL_OPTION_MODE_AMERICAN  # American option
 
 
 class SymbolOptionRight(IntEnum):
     """Symbol option right enumeration"""
 
-    CALL = 0  # Call option - right to buy
-    PUT = 1  # Put option - right to sell
+    CALL = mt5.SYMBOL_OPTION_RIGHT_CALL  # Call option - right to buy
+    PUT = mt5.SYMBOL_OPTION_RIGHT_PUT  # Put option - right to sell
 
 
 class SymbolSector(IntEnum):

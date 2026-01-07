@@ -19,8 +19,6 @@ from .symbol import (
 )
 from .terminal import (
     TerminalProperty,
-    TerminalColorTheme,
-    ThemeColor,
 )
 from .tick import (
     Tick,

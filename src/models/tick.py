@@ -1,17 +1,18 @@
 from pydantic import BaseModel
 from enum import IntEnum
+import MetaTrader5 as mt5 # type: ignore
 
 
 # Tick Flag Enumerations
 class TickFlag(IntEnum):
     """Tick flag enumeration"""
 
-    BID = 1  # Tick has changed a Bid price
-    ASK = 2  # Tick has changed an Ask price
-    LAST = 4  # Tick has changed the last deal price
-    VOLUME = 8  # Tick has changed a volume
-    BUY = 16  # Tick is a result of a buy deal
-    SELL = 32  # Tick is a result of a sell deal
+    BID = mt5.TICK_FLAG_BID  # Tick has changed a Bid price
+    ASK = mt5.TICK_FLAG_ASK  # Tick has changed an Ask price
+    LAST = mt5.TICK_FLAG_LAST  # Tick has changed the last deal price
+    VOLUME = mt5.TICK_FLAG_VOLUME  # Tick has changed a volume
+    BUY =  mt5.TICK_FLAG_BUY  # Tick is a result of a buy deal
+    SELL =  mt5.TICK_FLAG_SELL  # Tick is a result of a sell deal
 
 
 # Tick Structure

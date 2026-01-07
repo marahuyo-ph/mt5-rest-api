@@ -1,80 +1,81 @@
 from pydantic import BaseModel, Field
 from enum import IntEnum
 from typing import Optional
+import MetaTrader5 as mt5 # type: ignore
 
 
 # Trade Request Action Enumerations
 class TradeAction(IntEnum):
     """Trade action enumeration"""
 
-    DEAL = 1  # Place a deal (market order)
-    PENDING = 2  # Place a pending order
-    SLTP = 3  # Modify Stop Loss and Take Profit of a position
-    MODIFY = 4  # Modify a pending order
-    REMOVE = 5  # Cancel a pending order
-    CLOSE_BY = 6  # Close a position by an opposite one
+    DEAL = mt5.TRADE_ACTION_DEAL  # Place a deal (market order)
+    PENDING = mt5.TRADE_ACTION_PENDING  # Place a pending order
+    SLTP = mt5.TRADE_ACTION_SLTP  # Modify Stop Loss and Take Profit of a position
+    MODIFY = mt5.TRADE_ACTION_MODIFY  # Modify a pending order
+    REMOVE = mt5.TRADE_ACTION_REMOVE  # Cancel a pending order
+    CLOSE_BY = mt5.TRADE_ACTION_CLOSE_BY  # Close a position by an opposite one
 
 
 class OrderType(IntEnum):
     """Order type enumeration"""
 
-    BUY = 0  # Market buy order
-    SELL = 1  # Market sell order
-    BUY_LIMIT = 2  # Buy limit order
-    SELL_LIMIT = 3  # Sell limit order
-    BUY_STOP = 4  # Buy stop order
-    SELL_STOP = 5  # Sell stop order
-    BUY_STOP_LIMIT = 6  # Buy stop limit order
-    SELL_STOP_LIMIT = 7  # Sell stop limit order
-    CLOSE_BY = 8  # Close by (hedge) order
+    BUY = mt5.ORDER_TYPE_BUY  # Market buy order
+    SELL = mt5.ORDER_TYPE_SELL  # Market sell order
+    BUY_LIMIT = mt5.ORDER_TYPE_BUY_LIMIT  # Buy limit order
+    SELL_LIMIT = mt5.ORDER_TYPE_SELL_LIMIT  # Sell limit order
+    BUY_STOP = mt5.ORDER_TYPE_BUY_STOP  # Buy stop order
+    SELL_STOP = mt5.ORDER_TYPE_SELL_STOP  # Sell stop order
+    BUY_STOP_LIMIT = mt5.ORDER_TYPE_BUY_STOP_LIMIT  # Buy stop limit order
+    SELL_STOP_LIMIT = mt5.ORDER_TYPE_SELL_STOP_LIMIT  # Sell stop limit order
+    CLOSE_BY = mt5.ORDER_TYPE_CLOSE_BY  # Close by (hedge) order
 
 
 class OrderFilling(IntEnum):
     """Order filling type enumeration"""
 
-    FOK = 1  # Fill or Kill (FOK)
-    IOC = 2  # Immediate or Cancel (IOC)
-    BOC = 4  # Book or Cancel (BOC)
-    RETURN = 0  # Return (default)
+    FOK = mt5.ORDER_FILLING_FOK  # Fill or Kill (FOK)
+    IOC = mt5.ORDER_FILLING_IOC  # Immediate or Cancel (IOC)
+    BOC = mt5.ORDER_FILLING_BOC  # Book or Cancel (BOC)
+    RETURN = mt5.ORDER_FILLING_RETURN  # Return (default)
 
 
 class OrderTime(IntEnum):
     """Order time (expiration) type enumeration"""
 
-    GTC = 0  # Good Till Canceled
-    DAY = 1  # Good Till End of Day
-    SPECIFIED = 2  # Good Till Specified Time
-    SPECIFIED_DAY = 3  # Good Till Specified Day
+    GTC = mt5.ORDER_TIME_GTC  # Good Till Canceled
+    DAY = mt5.ORDER_TIME_DAY  # Good Till End of Day
+    SPECIFIED = mt5.ORDER_TIME_SPECIFIED  # Good Till Specified Time
+    SPECIFIED_DAY = mt5.ORDER_TIME_SPECIFIED_DAY  # Good Till Specified Day
 
 
 class OrderState(IntEnum):
     """Order state enumeration"""
 
-    STARTED = 0  # Order just placed
-    PLACED = 1  # Order placed on the exchange
-    CANCELED = 2  # Order has been canceled
-    PARTIAL = 3  # Order has been partially filled
-    FILLED = 4  # Order has been filled
-    REJECTED = 5  # Order has been rejected
-    EXPIRED = 6  # Order has expired
-    REQUEST_ADD = 7  # Order is in request queue
-    REQUEST_MODIFY = 8  # Order is in modify request queue
-    REQUEST_CANCEL = 9  # Order is in cancel request queue
+    STARTED = mt5.ORDER_STATE_STARTED  # Order just placed
+    PLACED = mt5.ORDER_STATE_PLACED  # Order placed on the exchange
+    CANCELED = mt5.ORDER_STATE_CANCELED  # Order has been canceled
+    PARTIAL = mt5.ORDER_STATE_PARTIAL  # Order has been partially filled
+    FILLED = mt5.ORDER_STATE_FILLED  # Order has been filled
+    REJECTED = mt5.ORDER_STATE_REJECTED  # Order has been rejected
+    EXPIRED = mt5.ORDER_STATE_EXPIRED  # Order has expired
+    REQUEST_ADD = mt5.ORDER_STATE_REQUEST_ADD  # Order is in request queue
+    REQUEST_MODIFY = mt5.ORDER_STATE_REQUEST_MODIFY  # Order is in modify request queue
+    REQUEST_CANCEL = mt5.ORDER_STATE_REQUEST_CANCEL  # Order is in cancel request queue
 
 
 class DealType(IntEnum):
     """Deal type enumeration"""
 
-    BUY = 0  # Buy deal
-    SELL = 1  # Sell deal
-    BUY_CANCELED = 2  # Canceled buy deal
-    SELL_CANCELED = 3  # Canceled sell deal
-    BALANCE = 4  # Balance
-    CREDIT = 5  # Credit
-    CHARGE = 6  # Charge
-    CORRECTION = 7  # Correction
-    BONUS = 8  # Bonus
-    COMMISSION = 9  # Commission
+    BUY = mt5.DEAL_TYPE_BUY  # Buy deal
+    SELL = mt5.DEAL_TYPE_SELL  # Sell deal
+    BUY_CANCELED = mt5.DEAL_TYPE_BUY_CANCELED  # Canceled buy deal
+    SELL_CANCELED = mt5.DEAL_TYPE_SELL_CANCELED  # Canceled sell deal
+    BALANCE = mt5.DEAL_TYPE_BUY  # Balance
+    CREDIT = mt5.DEAL_TYPE_BUY  # Credit
+    CHARGE = mt5.DEAL_TYPE_BUY  # Charge
+    CORRECTION = mt5.DEAL_TYPE_BUY  # Correction
+    BONUS = mt5.DEAL_TYPE_BUY  # Bonus
+    COMMISSION = mt5.DEAL_TYPE_BUY  # Commission
 
 
 class TradeTransactionType(IntEnum):
