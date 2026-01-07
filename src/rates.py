@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Path
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 import pandas as pd  # type: ignore
@@ -67,7 +68,11 @@ def copy_rates_from(
     rates = mt5.copy_rates_from(symbol, timeframe, date_from, count)
 
     if rates is None:
-        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        error = ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500,
+            content=error.model_dump(),
+        )
 
     df = pd.DataFrame(rates)
 

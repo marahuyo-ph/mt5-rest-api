@@ -169,7 +169,7 @@ def test_rates_from_invalid_symbol(client: TestClient):
     )
 
     # Should return error response
-    assert response.status_code == 200  # API returns 200 with error details
+    assert response.status_code == 500, "Should return 500 for MT5 errors"
     json_data = response.json()
     # Error response should have error fields
     assert isinstance(json_data, dict), "Error response should be a dictionary"

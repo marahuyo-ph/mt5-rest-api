@@ -118,7 +118,7 @@ def test_symbol_info_invalid(client: TestClient):
     # Get data from API
     response = client.get(f"/symbols/{symbol}")
 
-    assert response.status_code == 200, "Status code should be 200"
+    assert response.status_code == 500, "Status code should be 500 for MT5 errors"
     json_data = response.json()
 
     # Should return error response
@@ -173,7 +173,7 @@ def test_symbol_info_tick_invalid(client: TestClient):
     # Get data from API
     response = client.get(f"/symbols/{symbol}/last-tick")
 
-    assert response.status_code == 200, "Status code should be 200"
+    assert response.status_code == 500, "Status code should be 500 for MT5 errors"
     json_data = response.json()
 
     # Should return error response

@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Path, Query
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 import pandas as pd  # type: ignore
@@ -66,7 +67,11 @@ def copy_ticks_from(
     ticks = mt5.copy_ticks_from(symbol, date_from, count, flags)
 
     if ticks is None:
-        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        error = ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500,
+            content=error.model_dump(),
+        )
 
     df = pd.DataFrame(ticks)
 

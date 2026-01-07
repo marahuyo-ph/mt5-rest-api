@@ -75,8 +75,6 @@ __all__ = [
     "SymbolSector",
     # Terminal exports
     "TerminalProperty",
-    "TerminalColorTheme",
-    "ThemeColor",
     # Tick exports
     "Tick",
     "TickFlag",

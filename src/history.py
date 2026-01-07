@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Query
+from fastapi.responses import JSONResponse
 import MetaTrader5 as mt5  # type: ignore
 from datetime import datetime
 from .errors import ErrorResponse, ErrorCodes
@@ -123,12 +124,20 @@ def history_orders_get(
     elif position:
         orders = mt5.history_orders_get(position=position)
     else:
-        return ErrorResponse.model_validate(
+        error = ErrorResponse.model_validate(
             (ErrorCodes.RES_E_INVALID_PARAMS, "At least one filter parameter is required")
-        ).model_dump()
+        )
+        return JSONResponse(
+            status_code=400,
+            content=error.model_dump(),
+        )
 
     if orders is None:
-        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        error = ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500,
+            content=error.model_dump(),
+        )
 
     return [Order(**order._asdict()) for order in orders]
 
@@ -241,11 +250,19 @@ def history_deals_get(
     elif position:
         deals = mt5.history_deals_get(position=position)
     else:
-        return ErrorResponse.model_validate(
+        error = ErrorResponse.model_validate(
             (ErrorCodes.RES_E_INVALID_PARAMS, "At least one filter parameter is required")
-        ).model_dump()
+        )
+        return JSONResponse(
+            status_code=400,
+            content=error.model_dump(),
+        )
 
     if deals is None:
-        return ErrorResponse.model_validate(mt5.last_error()).model_dump()
+        error = ErrorResponse.model_validate(mt5.last_error())
+        return JSONResponse(
+            status_code=500,
+            content=error.model_dump(),
+        )
 
     return [Deal(**deal._asdict()) for deal in deals]
